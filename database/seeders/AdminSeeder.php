@@ -13,6 +13,11 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
+        Role::create([
+            'id' => '1',
+            'nama_role' => 'admin'
+        ]);
+        
         User::create([
             'username' => 'admin',
             'email' => 'admin@mail.com',
