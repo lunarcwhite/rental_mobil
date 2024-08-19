@@ -7,8 +7,9 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
-use Auth;
 use Illuminate\Support\Facades\Schema;
+use App\Models\PersetujuanAkun;
+use App\Models\Profile;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -37,20 +38,37 @@ class AuthServiceProvider extends ServiceProvider
             // Jika database tidak memiliki table roles maka akan dibuat roles sementara
             $roles = [
                 [
-                    'nama_role' => 'admin',
+                    'namaRole' => 'admin',
                 ],
                 [
-                    'nama_role' => 'user'
+                    'namaRole' => 'user'
                 ]
             ]; 
         }
 
         foreach ($roles as $key => $value) {
-            $namaRole = $value['nama_role'];
+            $namaRole = $value['namaRole'];
             Gate::define($namaRole, static function (User $user) use ($namaRole) {
-                return $user->role->nama_role === $namaRole;
+                return $user->role->namaRole === $namaRole;
             });
         }
+
+        Gate::define('accountVerified', function (User $user) {
+            return $user->accountVerified == true;
+        });
+        Gate::define('accountNotVerified', function (User $user) {
+            return $user->accountVerified == false;
+        });
+        //account pending = akun yang sudah melengkapi profile dan sedang menunggu persetujuan dari admin
+        Gate::define('accountPending', function (User $user) {
+            $ada = Profile::where('userId', $user->id)->first();
+            return $ada != null;
+        });
+
+        Gate::define('createProfile', function (User $user) {
+            $ada = Profile::where('userId', $user->id)->first();
+            return $ada == null;
+        });
         
     }
 }
