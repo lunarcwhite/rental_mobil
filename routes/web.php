@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
             Route::name('adminRental.')->group(function () {
                 Route::controller(KelolaMobilController::class)->group(function () {
                     Route::get('/kelolaMobil', 'index')->name('kelolaMobil.index');
+                    Route::get('/kelolaMobil/create', 'create')->name('kelolaMobil.create');
                     Route::post('/kelolaMobil', 'store')->name('kelolaMobil.store');
                     Route::get('/kelolaMobil/{id}/edit', 'edit')->name('kelolaMobil.edit');
                     Route::put('/kelolaMobil/{id}', 'update')->name('kelolaMobil.update');

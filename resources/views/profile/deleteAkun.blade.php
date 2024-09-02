@@ -22,8 +22,7 @@
                     @method('delete')
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input type="password" name="password" required
-                            class="form-control" id="exampleInputPassword1" placeholder="Masukan password untuk menghapus akun">
+                        @include('form.deleteAkunForm')
                     </div>
                     <button type="button" class="btn btn-danger" onclick="formConfirmation('Anda akan menghapus akun?')">
                         Hapus Akun

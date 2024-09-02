@@ -12,7 +12,7 @@
       <span>Dashboard</span></a>
   </li>
   <hr class="sidebar-divider">
-  <div class="sidebar-heading">
+  {{-- <div class="sidebar-heading">
     Features
   </div>
   <li class="nav-item">
@@ -33,7 +33,7 @@
       </div>
     </div>
   </li>
-  <hr class="sidebar-divider">
+  <hr class="sidebar-divider"> --}}
   @can('Super Admin')
   <div class="sidebar-heading">
     Akun
@@ -48,6 +48,32 @@
     <a class="nav-link" href="{{ route('superAdmin.kelolaAkun.index') }}">
       <i class="fas fa-fw fa-users"></i>
       <span>Kelola Akun</span>
+    </a>
+  </li>
+  <hr class="sidebar-divider">
+  <div class="sidebar-heading">
+    Mobil
+  </div>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ route('superAdmin.persetujuanAkun.index') }}">
+      <i class="fas fa-fw fa-car"></i>
+      <span>Persetujuan Mobil</span>
+    </a>
+  </li>
+  <hr class="sidebar-divider">
+  <div class="sidebar-heading">
+    Transaksi
+  </div>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ route('superAdmin.persetujuanAkun.index') }}">
+      <i class="fas fa-fw fa-database"></i>
+      <span>Histori Transaksi</span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ route('superAdmin.kelolaAkun.index') }}">
+      <i class="fas fa-fw fa-money-bill-wave"></i>
+      <span>Laporan Pendapatan</span>
     </a>
   </li>
   @endcan

@@ -1,4 +1,4 @@
-@extends('layouts.admin.master')
+@extends('layouts.desktop.master')
 @section('pageTitle')
     Profile
 @endsection
@@ -7,7 +7,7 @@
     <div class="card">
         <div class="card-body">
             <form id="setujuiAkun">
-                @include('profile.profileForm')
+                @include('form.profileForm')
             </form>
             <form action="{{ route('superAdmin.persetujuanAkun.setujui', $profile->userId) }}" method="post">
                 @csrf

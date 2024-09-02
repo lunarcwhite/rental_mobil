@@ -17,12 +17,12 @@
 <body id="page-top">
     <div id="wrapper">
         <!-- Sidebar -->
-        @include('layouts.admin.partials.sidebar')
+        @include('layouts.desktop.partials.sidebar')
         <!-- Sidebar -->
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <!-- TopBar -->
-                @include('layouts.admin.partials.topbar')
+                @include('layouts.desktop.partials.topbar')
                 <!-- Topbar -->
 
                 <!-- Container Fluid-->
@@ -67,7 +67,7 @@
                 <!---Container Fluid-->
             </div>
             <!-- Footer -->
-            @include('layouts.admin.partials.footer')
+            @include('layouts.desktop.partials.footer')
             <!-- Footer -->
         </div>
     </div>

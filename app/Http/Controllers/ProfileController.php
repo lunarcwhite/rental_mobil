@@ -183,7 +183,7 @@ class ProfileController extends Controller
             }
             
         } catch (\Throwable $th) {
-            dd($th->getMessage());
+            // dd($th->getMessage());
             return redirect()->back()->withErrors('Aksi gagal!')->withInput();
         }
         return redirect()->back()->with('success', 'Aksi berhasil');
@@ -200,6 +200,8 @@ class ProfileController extends Controller
 
         try {
             $user = $request->user();
+
+            Storage::delete('public/kyc/' . $user->profile->kyc);
 
             Auth::logout();
     

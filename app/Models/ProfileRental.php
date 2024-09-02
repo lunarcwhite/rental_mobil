@@ -22,4 +22,10 @@ class ProfileRental extends Model
         return $this->hasMany(Mobil::class, 'profileRentalId');
     }
 
+    /**
+     * Get all of the persetujuanMobil for the ProfileRental
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+
 }
