@@ -59,5 +59,5 @@
                     memperbarui foto KTP.</small>
             </div>
             @cannot('Konsumen')
-                @include('profile.profileRentalForm')
+                @include('form.profileRentalForm')
             @endcannot

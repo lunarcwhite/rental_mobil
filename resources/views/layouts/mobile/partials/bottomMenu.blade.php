@@ -5,10 +5,10 @@
             <strong>Dashboard</strong>
         </div>
     </a>
-    <a href="app-components.html" class="item">
+    <a href="https://tracker.id/mobile/tracking.php" class="item">
         <div class="col">
             <ion-icon name="cube-outline"></ion-icon>
-            <strong>Profile</strong>
+            <strong>GPS</strong>
         </div>
     </a>
     <a href="{{ route('adminRental.kelolaMobil.index') }}" class="item">

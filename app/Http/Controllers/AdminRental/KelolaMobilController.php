@@ -12,7 +12,8 @@ class KelolaMobilController extends Controller
 {
     public function index()
     {
-        $data['mobils'] = Mobil::all();
+        $idRental = Auth::user()->profileRental->id;
+        $data['mobils'] = Mobil::where('profileRentalId', $idRental)->get();
         return view('AdminRental.kelolaMobil.index')->with($data);
     }
 
@@ -96,7 +97,7 @@ class KelolaMobilController extends Controller
         try {
             $mobil = Mobil::where('id', $id)->first();
             Storage::delete('public/mobil/' . $mobil->gambar);
-            
+
             Mobil::where('id', $id)->delete();
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors('Aksi gagal!')->withInput();
