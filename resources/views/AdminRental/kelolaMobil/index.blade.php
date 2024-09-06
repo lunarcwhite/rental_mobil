@@ -4,7 +4,7 @@
 @endsection
 @section('topbarRightButton')
     <a href="{{ route('adminRental.kelolaMobil.create') }}" class="headerButton">
-        <span class="btn btn-primary">Tambah</span>
+        <span class="btn btn-outline-primary">Tambah</span>
     </a>
 @endsection
 @section('pageTitle')
@@ -13,7 +13,7 @@
 @section('content')
     @forelse ($mobils as $mobil)
         <div class="card mb-2">
-            <img src="{{ url(Storage::url('mobil/' . $mobil->gambar)) }}" class="card-img-top" alt="">
+            <img src="{{ url(Storage::url('mobil/' . $mobil->gambar)) }}" class="card-img-top" height="200px" alt="">
             <div class="card-body">
                 @if ($mobil->statusPersetujuan == 0)
                     <h6 class="card-subtitle text-warning">Mobil sedang ditinjau oleh admin</h6>

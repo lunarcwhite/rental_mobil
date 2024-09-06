@@ -12,8 +12,12 @@ class KelolaMobilController extends Controller
 {
     public function index()
     {
-        $idRental = Auth::user()->profileRental->id;
-        $data['mobils'] = Mobil::where('profileRentalId', $idRental)->get();
+        try {
+            $idRental = Auth::user()->profileRental->id;
+            $data['mobils'] = Mobil::where('profileRentalId', $idRental)->get();
+        } catch (\Throwable $th) {
+            return view('errors.500');
+        }
         return view('AdminRental.kelolaMobil.index')->with($data);
     }
 

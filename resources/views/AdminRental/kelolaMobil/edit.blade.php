@@ -4,7 +4,7 @@
 @endsection
 @section('topbarRightButton')
     <a href="{{ route('adminRental.kelolaMobil.index') }}" class="headerButton">
-        <span class="btn btn-primary">Kembali</span>
+        <span class="btn btn-outline-primary">Kembali</span>
     </a>
 @endsection
 @section('pageTitle')

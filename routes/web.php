@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SuperAdmin\KelolaAkunController;
 use App\Http\Controllers\SuperAdmin\PersetujuanAkunController;
+use App\Http\Controllers\SuperAdmin\PersetujuanMobilController;
 use App\Http\Controllers\AdminRental\KelolaMobilController;
 
 /*
@@ -42,6 +43,12 @@ Route::middleware('auth')->group(function () {
                     Route::post('/persetujuanAkun/setujuiAkun/{id}', 'setujui')->name('persetujuanAkun.setujui');
                     Route::post('/persetujuanAkun/tolakAkun/{id}', 'tolak')->name('persetujuanAkun.tolak');
                 });
+                Route::controller(PersetujuanMobilController::class)->group(function () {
+                    Route::get('/persetujuanMobil', 'index')->name('persetujuanMobil.index');
+                    Route::get('/persetujuanMobil/{id}', 'mobil')->name('persetujuanMobil.mobil');
+                    Route::post('/persetujuanMobil/setujuiMobil/{id}', 'setujui')->name('persetujuanMobil.setujui');
+                    Route::post('/persetujuanMobil/tolakMobil/{id}', 'tolak')->name('persetujuanMobil.tolak');
+                });
             });
         });
     });
@@ -61,6 +68,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'index')->name('profile.index');
+        Route::get('/profile/create', 'create')->name('profile.create');
         Route::post('/profile', 'store')->name('profile.store');
         Route::put('/profile', 'update')->name('profile.update');
         Route::patch('/profile/akun', 'akunUpdate')->name('profile.akunUpdate');

@@ -70,7 +70,11 @@
     <!-- * App Capsule -->
 
     <!-- App Bottom Menu -->
+    @can('accountVerified')
+    @cannot('Konsumen')
     @include('layouts.mobile.partials.bottomMenu')
+    @endcannot
+    @endcan
     <!-- * App Bottom Menu -->
 
     <!-- App Sidebar -->
@@ -80,7 +84,7 @@
     <!-- Modal Logout -->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabelLogout">Logout!</h5>
@@ -118,6 +122,7 @@
 
     @include('layouts.alert')
     {{-- @include('layouts.dataTable') --}}
+    @stack('jsRental')
     @stack('js')
 </body>
 

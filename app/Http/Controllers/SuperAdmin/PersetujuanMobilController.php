@@ -4,25 +4,25 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Mobil;
 use App\Models\PersetujuanAkun;
 use App\Models\Profile;
 use App\Models\ProfileRental;
 
-class PersetujuanAkunController extends Controller
+class PersetujuanMobilController extends Controller
 {
     public function index()
     {
         try {
-            $data['users'] = User::whereNot('id', 1)->where('accountVerified', false)->get();
+            $data['mobils'] = Mobil::where('statusPersetujuan', 0)->get();
         } catch (\Throwable $th) {
             // dd($th->getMessage());
             return view('errors.500');
         }
-        return view('SuperAdmin.persetujuanAkun.index')->with($data);
+        return view('SuperAdmin.persetujuanMobil.index')->with($data);
     }
 
-    public function profile($id)
+    public function mobil($id)
     {
         try {
             $data['profile'] = Profile::where('userId', $id)->first();

@@ -55,7 +55,7 @@
     Mobil
   </div>
   <li class="nav-item">
-    <a class="nav-link" href="{{ route('superAdmin.persetujuanAkun.index') }}">
+    <a class="nav-link" href="{{ route('superAdmin.persetujuanMobil.index') }}">
       <i class="fas fa-fw fa-car"></i>
       <span>Persetujuan Mobil</span>
     </a>

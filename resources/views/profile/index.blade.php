@@ -1,40 +1,55 @@
-@extends('layouts.admin.master')
+@extends('layouts.mobile.master')
+@section('topbarPageTitle')
+    Profile
+@endsection
 @section('pageTitle')
     Profile
 @endsection
 @section('content')
-    @include('SuperAdmin.persetujuanAkun.alasanPenolakan')
     @cannot('Super Admin')
-        <div class="card">
-            <div class="card-body">
-                <form id="updateProfile" action="{{ route('profile.update') }}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    @method('put')
-                    @include('profile.profileForm')
-                    <button type="button" onclick="formConfirmation('Perbarui Data Profile')"
-                        class="btn btn-primary float-right">Simpan</button>
-                </form>
+        @include('layouts.content.alasanPenolakan')
+        <form id="updateProfile" action="{{ route('profile.update') }}" method="post" enctype="multipart/form-data">
+            @method('put')
+            @csrf
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Profile Pengguna</h4>
+                </div>
+                <div class="card-body">
+                    @include('form.editProfileForm')
+                </div>
             </div>
-        </div>
-    @endcannot
-    <div class="card mt-2 mb-3">
-        <div class="card-body">
-            <h4 class="m-0 font-weight-bold text-primary">Informasi Akun</h4>
+            @cannot('Konsumen')
+                <div class="card mt-2">
+                    <div class="card-header">
+                        <h4 class="card-title">Profile Rental</h4>
+                    </div>
+                    <div class="card-body">
+                        @include('form.editProfileRentalForm')
+                    </div>
+                </div>
+            @endcannot
+            <button type="button" class="btn btn-primary btn-block btn-lg mt-1"
+                onclick="formConfirmation('Simpan Data?')">Simpan</button>
             <hr />
+        </form>
+    @endcannot
+    <div class="card mt-2">
+        <div class="card-header">
+            <h4 class="card-title">Informasi Akun</h4>
+        </div>
+        <div class="card-body">
             <form action="{{ route('profile.akunUpdate') }}" method="post" id="formUpdateAkun">
                 @csrf
                 @method('patch')
-                @include('profile.akunForm')
-                <button type="button" onclick="formConfirmation('Perbarui Data Akun')"
-                    class="btn btn-primary float-right">Simpan</button>
+                @include('form.editAkunForm')
+                <button type="button" class="btn btn-primary btn-block btn-lg mt-1"
+                    onclick="formConfirmation('Simpan Data?')">Simpan</button>
             </form>
         </div>
     </div>
     @cannot('Super Admin')
-        @include('profile.deleteForm')
+        @include('profile.delete')
         @include('profile.kyc')
     @endcannot
-    @push('js')
-        @include('profile.script')
-    @endpush
 @endsection

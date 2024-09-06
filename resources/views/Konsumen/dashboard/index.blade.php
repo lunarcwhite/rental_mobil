@@ -14,8 +14,8 @@
             <div>
                 <div class="customer-message align-items-center m-3">
                     <div class="text message-title">
-                        <p> Hallo {{ Auth::user()->name }} segera lengkapi profile rental anda agar
-                            dapat memulai merentalkan mobil.</p>
+                        <p> Hallo {{ Auth::user()->name }} segera lengkapi profile anda agar
+                            dapat memulai merental mobil.</p>
                     </div>
                     <a href="{{ route('profile.create') }}" class="btn btn-sm btn-info">Klik disini
                         untuk melengkapi profile</a>

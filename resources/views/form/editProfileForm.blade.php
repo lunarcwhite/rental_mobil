@@ -1,6 +1,4 @@
 
-            <h4 class="m-0 font-weight-bold text-primary">Profile Pengguna</h4>
-            <hr />
             <div class="form-group">
                 <label for="exampleInputEmail1">NIK</label>
                 <input type="number" name="profile[nik]" value="{{ $profile->nik }}" required class="form-control"
@@ -58,6 +56,77 @@
                 <small id="kycHelp" class="form-text text-muted">*Tidak perlu mengisi kolom ini jika tidak ingin
                     memperbarui foto KTP.</small>
             </div>
-            @cannot('Konsumen')
-                @include('form.profileRentalForm')
-            @endcannot
+            @push('js')
+            <script>
+                // URL API Anda
+                const kecamatan = document.getElementById('kecamatan');
+                const desa = document.getElementById('desa');
+            
+                const loadKecamatan = `https://www.emsifa.com/api-wilayah-indonesia/api/districts/3203.json`;
+            
+                // Fungsi untuk memuat data dari API
+                async function loadDataKecamatan() {
+                    await fetch(loadKecamatan)
+                        .then(response => response.json())
+                        .then(data => {
+                            // Asumsikan data adalah array of objects
+            
+                            data.forEach(item => {
+                                const option = document.createElement('option');
+                                option.value = item.id; // atau properti lain yang Anda inginkan seperti id
+                                option.textContent = item
+                                    .name; // atau properti lain yang Anda inginkan seperti text
+                                if (kecamatan.value == item.id) {
+                                    option.selected = true;
+                                }
+                                kecamatan.appendChild(option);
+                            });
+            
+                        })
+                        .catch(error => {
+                            console.error('Error fetching data:', error);
+                        });
+                }
+            
+                async function loadDataDesa() {
+                    const loadDesa = `https://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatan.value}.json`;
+            
+                    await fetch(loadDesa)
+                        .then(response => response.json())
+                        .then(data => {
+                            data.forEach(item => {
+                                const option = document.createElement('option');
+                                option.value = item.id; // atau properti lain yang Anda inginkan sebagai value
+                                option.textContent = item
+                                    .name; // atau properti lain yang Anda inginkan sebagai teks
+                                if (desa.value == item.id) {
+                                    option.selected = true;
+                                }
+                                desa.appendChild(option);
+                            });
+            
+            
+                        })
+                        .catch(error => {
+                            console.error('Error fetching data:', error);
+                        });
+        
+                }
+            
+                async function resetDesa() {
+                    desa.innerHTML = '';
+                    await loadDataDesa();
+                }
+            
+            
+                kecamatan.addEventListener('change', resetDesa);
+            
+                async function onLoadFunctions() {
+                    await loadDataKecamatan();
+                    await loadDataDesa();
+                }
+            
+                window.onload = onLoadFunctions;
+            </script>
+            @endpush
+        

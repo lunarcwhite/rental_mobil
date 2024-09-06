@@ -18,19 +18,99 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $data['profile'] = Profile::where('userId', $user->id)->first();
-        $data['user'] = User::where('id', $user->id)->first();
-        $data['profileRental'] = ProfileRental::where('userId', $user->id)->first();
-        $data['penolakans'] = PersetujuanAkun::where('userId', $user->id)->get();
+        try {
+            $user = Auth::user();
+            $data['profile'] = Profile::where('userId', $user->id)->first();
+            $data['user'] = User::where('id', $user->id)->first();
+            $data['profileRental'] = ProfileRental::where('userId', $user->id)->first();
+            $data['penolakans'] = PersetujuanAkun::where('userId', $user->id)->get();
+        } catch (\Throwable $th) {
+            return view('errors.500');
+        }
         return view('profile.index')->with($data);
+    }
+
+    public function create()
+    {
+        try {
+            return view('profile.create');
+        } catch (\Throwable $th) {
+            return view('errors.500');
+        }
+    }
+
+        /**
+     * store the user's profile information.
+     */
+    public function store(Request $request)
+    {
+        $user = Auth::user();
+        // dd($filename);
+        if($user->roleId == 3){
+            $request->validate([
+                'profile.nik' => 'required|digits:16',
+                'profile.namaLengkap' => 'required',
+                'profile.tanggalLahir' => 'required',
+                'profile.alamatTempatTinggal' => 'required',
+                'profile.kecamatan' => 'required',
+                'profile.desa' => 'required',
+                'profile.rt' => 'required',
+                'profile.rw' => 'required',
+                'profile.noHp' => 'required',
+                'profile.kyc' => 'required|image|mimes:jpeg,png,jpg',
+            ]);
+        }else{
+            $request->validate([
+                'profile.nik' => 'required|digits:16',
+                'profile.namaLengkap' => 'required',
+                'profile.tanggalLahir' => 'required',
+                'profile.alamatTempatTinggal' => 'required',
+                'profile.kecamatan' => 'required',
+                'profile.desa' => 'required',
+                'profile.rt' => 'required',
+                'profile.rw' => 'required',
+                'profile.noHp' => 'required',
+                'profile.kyc' => 'required|image|mimes:jpeg,png,jpg',
+                'profileRental.namaRental' => 'required',
+                'profileRental.kecamatanRental' => 'required',
+                'profileRental.desaRental' => 'required',
+                'profileRental.rtRental' => 'required',
+                'profileRental.rwRental' => 'required',
+                'profileRental.noHpRental' => 'required',
+            ]);
+        }
+        
+        try {
+            $profile = $request->profile;
+            $foto = $profile['kyc'];
+
+            $extension = $foto->extension();
+            $filename = 'kyc_' . '' . $user->id . '.' . $extension;
+            $foto->storeAs('public/kyc/', $filename);
+            $profile['kyc'] = $filename;
+
+            $profile['userId'] = $user->id;
+
+            Profile::create($profile);
+
+            if ($user->roleId == 2) {
+                $profileRental = $request->profileRental;
+                $profileRental['userId'] = $user->id;
+                ProfileRental::create($profileRental);
+            }
+            
+        } catch (\Throwable $th) {
+            // dd($th->getMessage());
+            return redirect()->back()->withErrors('Aksi gagal!')->withInput();
+        }
+        return redirect()->route('dashboard')->with('success', 'Aksi berhasil');
     }
 
     public function update(Request $request)
     {
         $user = Auth::user();
         // dd($request->profile);
-        if($user->roleId == 2){
+        if($user->roleId == 3){
             $request->validate([
                 'profile.nik' => 'required|digits:16',
                 'profile.namaLengkap' => 'required',
@@ -89,7 +169,7 @@ class ProfileController extends Controller
             // dd($th->getMessage());
             return redirect()->back()->withErrors('Aksi gagal!')->withInput();
         }
-        return redirect()->back()->with('success', 'Aksi berhasil');
+        return redirect()->route('dashboard')->with('success', 'Aksi berhasil');
         
     }
 
@@ -120,73 +200,6 @@ class ProfileController extends Controller
             return redirect()->back()->withErrors('Aksi gagal!')->withInput();
         }
         return redirect()->back()->with('success', 'Aksi berhasil!');
-    }
-
-    /**
-     * store the user's profile information.
-     */
-    public function store(Request $request)
-    {
-        $user = Auth::user();
-        // dd($filename);
-        if($user->roleId == 2){
-            $request->validate([
-                'profile.nik' => 'required|digits:16',
-                'profile.namaLengkap' => 'required',
-                'profile.tanggalLahir' => 'required',
-                'profile.alamatTempatTinggal' => 'required',
-                'profile.kecamatan' => 'required',
-                'profile.desa' => 'required',
-                'profile.rt' => 'required',
-                'profile.rw' => 'required',
-                'profile.noHp' => 'required',
-                'profile.kyc' => 'required|image|mimes:jpeg,png,jpg',
-            ]);
-        }else{
-            $request->validate([
-                'profile.nik' => 'required|digits:16',
-                'profile.namaLengkap' => 'required',
-                'profile.tanggalLahir' => 'required',
-                'profile.alamatTempatTinggal' => 'required',
-                'profile.kecamatan' => 'required',
-                'profile.desa' => 'required',
-                'profile.rt' => 'required',
-                'profile.rw' => 'required',
-                'profile.noHp' => 'required',
-                'profile.kyc' => 'required|image|mimes:jpeg,png,jpg',
-                'profileRental.namaRental' => 'required',
-                'profileRental.kecamatanRental' => 'required',
-                'profileRental.desaRental' => 'required',
-                'profileRental.rtRental' => 'required',
-                'profileRental.rwRental' => 'required',
-                'profileRental.noHpRental' => 'required',
-            ]);
-        }
-        
-        try {
-            $profile = $request->profile;
-            $foto = $profile['kyc'];
-
-            $extension = $foto->extension();
-            $filename = 'kyc_' . '' . $user->id . '.' . $extension;
-            $foto->storeAs('public/kyc/', $filename);
-            $profile['kyc'] = $filename;
-
-            $profile['userId'] = $user->id;
-
-            Profile::create($profile);
-
-            if ($user->roleId == 2) {
-                $profileRental = $request->profileRental;
-                $profileRental['userId'] = $user->id;
-                ProfileRental::create($profileRental);
-            }
-            
-        } catch (\Throwable $th) {
-            // dd($th->getMessage());
-            return redirect()->back()->withErrors('Aksi gagal!')->withInput();
-        }
-        return redirect()->back()->with('success', 'Aksi berhasil');
     }
 
     /**

@@ -1,25 +1,25 @@
 @extends('layouts.desktop.master')
 @section('pageTitle')
-    Profile
+    Data Mobil
 @endsection
 @section('content')
-    @include('layouts.content.alasanPenolakan')
+@include('layouts.desktop.content.alasanPenolakan')
     <div class="card">
         <div class="card-body">
             <form id="setujuiAkun">
-                @include('form.editProfileForm')
+                @include('form.editMobilForm')
             </form>
-            <form action="{{ route('superAdmin.persetujuanAkun.setujui', $profile->userId) }}" method="post">
+            <form action="{{ route('superAdmin.persetujuanMobil.setujui', $mobil->id) }}" method="post">
                 @csrf
-                <button type="button" onclick="formConfirmation('Setujui Akun Ini?')"
+                <button type="button" onclick="formConfirmation('Setujui Mobil Ini?')"
                     class="btn btn-primary float-right">Setujui</button>
             </form>
                 <button type="button" data-toggle="modal"
-                data-target="#tolakAkun" class="mr-3 ml-3 btn btn-danger float-right">Tolak</button>
+                data-target="#tolakMobil" class="mr-3 ml-3 btn btn-danger float-right">Tolak</button>
         </div>
     </div>
-    @include('profile.kyc')
-    @include('SuperAdmin.persetujuanAkun.tolak')
+    @include('')
+    @include('SuperAdmin.persetujuanMobil.tolak')
     @push('js')
     <script>
         let kyc = document.getElementById('kyc');
@@ -59,5 +59,3 @@
     </script>
     @endpush
 @endsection
-
-
