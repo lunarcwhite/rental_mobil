@@ -5,9 +5,7 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Mobil;
-use App\Models\PersetujuanAkun;
-use App\Models\Profile;
-use App\Models\ProfileRental;
+use App\Models\PersetujuanMobil;
 
 class PersetujuanMobilController extends Controller
 {
@@ -25,27 +23,27 @@ class PersetujuanMobilController extends Controller
     public function mobil($id)
     {
         try {
-            $data['profile'] = Profile::where('userId', $id)->first();
-            $data['profileRental'] = ProfileRental::where('userId', $id)->first();
-            $data['penolakans'] = PersetujuanAkun::where('userId', $id)->get();
+            $data['mobil'] = Mobil::where('id', $id)->first();
+            $data['penolakans'] = PersetujuanMobil::where('mobilId', $id)->get();
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return view('errors.500');
         }
-        return view('SuperAdmin.persetujuanAkun.profile')->with($data);
+        return view('SuperAdmin.persetujuanMobil.mobil')->with($data);
     }
 
     public function setujui($id)
     {
         try {
-            $penolakan = PersetujuanAkun::where('userId', $id)->delete();
-            User::where('id', $id)->update([
-                'accountVerified' => 1
+            $penolakan = PersetujuanMobil::where('mobilId', $id)->delete();
+            Mobil::where('id', $id)->update([
+                'statusPersetujuan' => 1
             ]);
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors('Aksi gagal!')->withInput();
         }
 
-        return redirect()->route('superAdmin.persetujuanAkun.index')->with('success', 'Aksi berhasil!');
+        return redirect()->route('superAdmin.persetujuanMobil.index')->with('success', 'Aksi berhasil!');
     }
 
     public function tolak(Request $request, $id)
@@ -54,14 +52,14 @@ class PersetujuanMobilController extends Controller
             'alasanPenolakan' => 'required'
         ]); 
         try {
-            PersetujuanAkun::create([
+            PersetujuanMobil::create([
                 'alasanPenolakan' => $request->alasanPenolakan,
-                'userId' => $id
+                'mobilId' => $id
             ]);
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors('Aksi gagal!')->withInput();
         }
 
-        return redirect()->route('superAdmin.persetujuanAkun.index')->with('success', 'Aksi berhasil!');
+        return redirect()->route('superAdmin.persetujuanMobil.index')->with('success', 'Aksi berhasil!');
     }
 }

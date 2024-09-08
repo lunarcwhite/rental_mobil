@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('persetujuan_mobils', function (Blueprint $table) {
             $table->id();
-            $table->string('alasan_penolakan');
+            $table->string('alasanPenolakan');
             $table->bigInteger('mobilId')->unsigned();
             $table->timestamps();
             

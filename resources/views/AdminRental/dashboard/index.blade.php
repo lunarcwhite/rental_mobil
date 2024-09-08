@@ -6,6 +6,7 @@
     Dashboard
 @endsection
 @section('content')
+<div class="section mt-2">
     @can('accountNotVerified')
         @can('createProfile')
             <div class="card-header py-4 bg-primary d-flex flex-row align-items-center justify-content-between">
@@ -47,4 +48,5 @@
     @can('accountVerified')
         Hello
     @endcan
+</div>
 @endsection

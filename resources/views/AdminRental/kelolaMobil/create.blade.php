@@ -4,13 +4,15 @@
 @endsection
 @section('topbarRightButton')
     <a href="{{ route('adminRental.kelolaMobil.index') }}" class="headerButton">
-        <span class="btn btn-outline-primary">Kembali</span>
+        <span class="btn btn-secondary">Kembali</span>
     </a>
 @endsection
 @section('pageTitle')
     Tambah Mobil
 @endsection
 @section('content')
+<div class="section mt-2">
+
     <form action="{{ route('adminRental.kelolaMobil.store') }}" id="formCreateMobil" method="POST"
         enctype="multipart/form-data">
         @csrf
@@ -19,4 +21,5 @@
             onclick="formConfirmation('Simpan Data?')">Simpan</button>
     </form>
     <hr />
+</div>
 @endsection

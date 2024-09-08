@@ -17,7 +17,7 @@ return new class extends Migration
             $table->tinyInteger('jumlahKursi');
             $table->string('gigi');
             $table->integer('harga')->unsigned();
-            $table->boolean('statusKetersedia')->nullable()->default(true);
+            $table->boolean('statusAktif')->nullable()->default(true);
             $table->boolean('statusPersetujuan')->nullable()->default(false);
             $table->string('gambar')->nullable()->default('text');
             $table->string('deskripsi')->nullable()->default('text');

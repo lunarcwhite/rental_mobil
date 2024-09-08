@@ -70,7 +70,7 @@
 <div class="form-group basic">
     <div class="input-wrapper">
         <label class="label" for="deskripsi">Deskripsi</label>
-        <input type="text" class="form-control" name="deskripsi" id="deskripsi" placeholder="Deskripsi">
+        <textarea name="deskripsi" id="deskripsi" cols="30" rows="10" class="form-control"></textarea>
         <i class="clear-input">
             <ion-icon name="close-circle"></ion-icon>
         </i>

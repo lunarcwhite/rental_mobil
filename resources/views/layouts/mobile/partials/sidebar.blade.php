@@ -6,66 +6,89 @@
                 <!-- profile box -->
                 <div class="profileBox">
                     <div class="image-wrapper">
-                        <img src="assets/img/sample/avatar/avatar1.jpg" alt="image" class="imaged rounded">
+                        <img src="{{ asset('img/profile.jpg') }}" alt="image" class="imaged rounded">
                     </div>
                     <div class="in">
-                        <strong>Julian Gruber</strong>
-                        <div class="text-muted">
-                            <ion-icon name="location"></ion-icon>
-                            California
-                        </div>
+                        @auth
+                            <strong>{{ Auth::user()->name }}</strong>
+                            <div class="text-muted">
+                            @if (Auth::user()->accountVerified == 1)
+                            Profile Terverifikasi
+                            <ion-icon name="shield-checkmark-outline"></ion-icon>
+                            @else
+                            Profile Belum Terverifikasi
+                            <ion-icon name="alert-circle-outline"></ion-icon>
+                            @endif
+                            </div>
+                        @endauth
                     </div>
                     <a href="javascript:;" class="close-sidebar-button" data-dismiss="modal">
                         <ion-icon name="close"></ion-icon>
                     </a>
                 </div>
                 <!-- * profile box -->
-
                 <ul class="listview flush transparent no-line image-listview mt-2">
+                    @guest
+                        <li>
+                            <a href="{{ route('login') }}" class="item">
+                                <div class="icon-box">
+                                    <ion-icon name="log-in-outline"></ion-icon>
+                                </div>
+                                <div class="in">
+                                    Login
+                                </div>
+                            </a>
+                        </li>
+                    @endguest
+                    @auth
+                    @cannot('accountVerified')
                     <li>
-                        <a href="index.html" class="item">
-                            <div class="icon-box bg-primary">
+                        <a href="{{ route('dashboard') }}" class="item">
+                            <div class="icon-box">
+                                <ion-icon name="person-outline"></ion-icon>
+                            </div>
+                            <div class="in">
+                                Verifikasi Profile
+                            </div>
+                        </a>
+                    </li>
+                    @endcannot
+                    @endauth
+                    <li>
+                        <a href="{{ route('landingPage') }}" class="item">
+                            <div class="icon-box">
                                 <ion-icon name="home-outline"></ion-icon>
                             </div>
                             <div class="in">
-                                Discover
+                                Beranda
+                            </div>
+                        </a>
+                    </li>
+                    @can('Konsumen')
+                    <li>
+                        <a href="{{ route('pembayaran.invoice') }}" class="item">
+                            <div class="icon-box">
+                                <ion-icon name="card-outline"></ion-icon>
+                            </div>
+                            <div class="in">
+                                Pembayaran
                             </div>
                         </a>
                     </li>
                     <li>
-                        <a href="app-components.html" class="item">
-                            <div class="icon-box bg-primary">
-                                <ion-icon name="cube-outline"></ion-icon>
+                        <a href="{{ route('landingPage') }}" class="item">
+                            <div class="icon-box">
+                                <ion-icon name="archive-outline"></ion-icon>
                             </div>
                             <div class="in">
-                                Components
+                                Riwayat Rental
                             </div>
                         </a>
-                    </li>
-                    <li>
-                        <a href="app-pages.html" class="item">
-                            <div class="icon-box bg-primary">
-                                <ion-icon name="layers-outline"></ion-icon>
-                            </div>
-                            <div class="in">
-                                <div>Pages</div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="page-chat.html" class="item">
-                            <div class="icon-box bg-primary">
-                                <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
-                            </div>
-                            <div class="in">
-                                <div>Chat</div>
-                                <span class="badge badge-danger">5</span>
-                            </div>
-                        </a>
-                    </li>
+                    </li>  
+                    @endcan
                     <li>
                         <div class="item">
-                            <div class="icon-box bg-primary">
+                            <div class="icon-box">
                                 <ion-icon name="moon-outline"></ion-icon>
                             </div>
                             <div class="in">
@@ -79,71 +102,28 @@
                         </div>
                     </li>
                 </ul>
-
-                <div class="listview-title mt-2 mb-1">
-                    <span>Friends</span>
-                </div>
-                <ul class="listview image-listview flush transparent no-line">
-                    <li>
-                        <a href="page-chat.html" class="item">
-                            <img src="assets/img/sample/avatar/avatar7.jpg" alt="image" class="image">
-                            <div class="in">
-                                <div>Sophie Asveld</div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="page-chat.html" class="item">
-                            <img src="assets/img/sample/avatar/avatar3.jpg" alt="image" class="image">
-                            <div class="in">
-                                <div>Sebastian Bennett</div>
-                                <span class="badge badge-danger">6</span>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="page-chat.html" class="item">
-                            <img src="assets/img/sample/avatar/avatar10.jpg" alt="image" class="image">
-                            <div class="in">
-                                <div>Beth Murphy</div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="page-chat.html" class="item">
-                            <img src="assets/img/sample/avatar/avatar2.jpg" alt="image" class="image">
-                            <div class="in">
-                                <div>Amelia Cabal</div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="page-chat.html" class="item">
-                            <img src="assets/img/sample/avatar/avatar5.jpg" alt="image" class="image">
-                            <div class="in">
-                                <div>Henry Doe</div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-
             </div>
-
-            <!-- sidebar buttons -->
-            <div class="sidebar-buttons">
-                <a href="javascript:;" class="button">
-                    <ion-icon name="person-outline"></ion-icon>
-                </a>
-                <a href="javascript:;" class="button">
-                    <ion-icon name="archive-outline"></ion-icon>
-                </a>
-                <a href="javascript:;" class="button">
-                    <ion-icon name="settings-outline"></ion-icon>
-                </a>
-                <a href="javascript:;" data-toggle="modal" data-target="#logoutModal" class="button">
-                    <ion-icon name="log-out-outline"></ion-icon>
-                </a>
-            </div>
+            @auth
+                <form action="{{ route('logout') }}" method="post" id="logoutForm">
+                    @csrf
+                    <!-- sidebar buttons -->
+                    <div class="sidebar-buttons">
+                        @can('accountVerified')
+                            <a href="{{ route('profile.index') }}" data-toggle="tooltip" data-placement="top" title="Profile"
+                                class="button">
+                                <ion-icon name="person-outline"></ion-icon>
+                            </a>
+                        @endcan
+                        <a href="javascript:;" class="button">
+                            <ion-icon name="settings-outline"></ion-icon>
+                        </a>
+                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Logout"
+                            onclick="formConfirmation2('Anda akan logout?')" class="button">
+                            <ion-icon name="log-out-outline"></ion-icon>
+                        </a>
+                    </div>
+                </form>
+            @endauth
             <!-- * sidebar buttons -->
         </div>
     </div>

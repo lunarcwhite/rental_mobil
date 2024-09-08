@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class PersetujuanMobil extends Model
+class Pembayaran extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['alasanPenolakan', 'mobilId'];
+    protected $fillable = ['userId', 'mobilId', 'tanggalMulai', 'tanggalKembali', 'harusBayar', 'totalBayar', 'kodePembayaran', 'durasiRental'];
 
     /**
-     * Get the profileRental that owns the PersetujuanMobil
+     * Get the mobil that owns the Pembayaran
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -21,4 +21,5 @@ class PersetujuanMobil extends Model
     {
         return $this->belongsTo(Mobil::class, 'mobilId');
     }
+
 }

@@ -17,6 +17,9 @@ class DashboardController extends Controller
         }elseif ($user->roleId == 2) {
             return view('adminRental.dashboard.index')->with($data);
         }elseif ($user->roleId == 3){
+            if (Auth::user()->accountVerified == 1) {
+                return redirect()->route('landingPage');
+            }
             return view('konsumen.dashboard.index')->with($data);
         }
     }

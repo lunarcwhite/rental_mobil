@@ -2,10 +2,16 @@
 @section('topbarPageTitle')
     Profile
 @endsection
+@section('topbarRightButton')
+    <a href="{{ route('dashboard') }}" class="headerButton">
+        <span class="btn btn-secondary">Kembali</span>
+    </a>
+@endsection
 @section('pageTitle')
     Profile
 @endsection
 @section('content')
+<div class="section mt-2">
     @cannot('Super Admin')
         @include('layouts.content.alasanPenolakan')
         <form id="updateProfile" action="{{ route('profile.update') }}" method="post" enctype="multipart/form-data">
@@ -52,4 +58,5 @@
         @include('profile.delete')
         @include('profile.kyc')
     @endcannot
+</div>
 @endsection

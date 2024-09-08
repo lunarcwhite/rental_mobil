@@ -5,6 +5,7 @@ namespace App\Http\Controllers\AdminRental;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Mobil;
+use App\Models\PersetujuanMobil;
 use Auth;
 use Storage;
 
@@ -60,6 +61,7 @@ class KelolaMobilController extends Controller
     public function edit($id)
     {
         $data['mobil'] = Mobil::where('id', $id)->first();
+        $data['penolakans'] = PersetujuanMobil::where('mobilId', $id)->get();
         return view('AdminRental.kelolaMobil.edit')->with($data);
     }
 
@@ -94,6 +96,19 @@ class KelolaMobilController extends Controller
             return redirect()->back()->withErrors('Aksi Gagal')->withInput();
         }
         return redirect()->route('adminRental.kelolaMobil.index')->with('success', 'Aksi Berhasil');
+    }
+
+    public function aktif(Request $request, $id)
+    {
+        try {
+            Mobil::where('id', $id)->update([
+                'statusAktif' => $request->statusAktif
+            ]);
+        } catch (\Throwable $th) {
+            return redirect()->back()->withErrors('Aksi gagal!')->withInput();
+        }
+
+        return redirect()->back()->with('success', 'Aksi berhasil!');
     }
 
     public function destroy($id)

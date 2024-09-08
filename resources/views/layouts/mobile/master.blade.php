@@ -15,6 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('mobile/assets/img/icon/192x192.png') }}">
     <link rel="stylesheet" href="{{ asset('mobile/assets/css/style.css') }}">
     <link rel="manifest" href="{{ asset('mobile/__manifest.json') }}">
+    <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
 </head>
 
 <body class="bg-white">
@@ -39,22 +40,6 @@
     </div>
     <!-- * App Header -->
 
-    <!-- Search Component -->
-    <div id="search" class="appHeader">
-        <form class="search-form">
-            <div class="form-group searchbox">
-                <input type="text" class="form-control" placeholder="Search...">
-                <i class="input-icon">
-                    <ion-icon name="search-outline"></ion-icon>
-                </i>
-                <a href="javascript:;" class="ml-1 close toggle-searchbox">
-                    <ion-icon name="close-circle"></ion-icon>
-                </a>
-            </div>
-        </form>
-    </div>
-    <!-- * Search Component -->
-
     <!-- App Capsule -->
     <div id="appCapsule">
 
@@ -62,10 +47,8 @@
         <div class="header-large-title">
             <h1 class="title">@yield('pageTitle')</h1>
         </div>
-        <div class="section mt-2">
-            @yield('content')
-        </div>
-
+        @yield('content')
+        @yield('footer')
     </div>
     <!-- * App Capsule -->
 
@@ -80,31 +63,6 @@
     <!-- App Sidebar -->
     @include('layouts.mobile.partials.sidebar')
     <!-- * App Sidebar -->
-
-    <!-- Modal Logout -->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabelLogout">Logout!</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Anda akan logout?</p>
-                </div>
-                <div class="modal-footer">
-                    <form action="{{ route('logout') }}" method="post">
-                        @csrf
-                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Logout</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- ///////////// Js Files ////////////////////  -->
     <!-- Jquery -->

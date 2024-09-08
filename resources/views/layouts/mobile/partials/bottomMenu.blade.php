@@ -7,7 +7,7 @@
     </a>
     <a href="https://tracker.id/mobile/tracking.php" class="item">
         <div class="col">
-            <ion-icon name="cube-outline"></ion-icon>
+            <ion-icon name="map-outline"></ion-icon>
             <strong>GPS</strong>
         </div>
     </a>

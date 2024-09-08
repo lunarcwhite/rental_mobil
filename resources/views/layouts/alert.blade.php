@@ -32,7 +32,7 @@
     function formConfirmation(message) {
         var form = event.target.form;
         Swal.fire({
-            html: `<h3>${message}</h3>`,
+            html: `<h3 class="text-dark">${message}</h3>`,
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -46,10 +46,10 @@
         })
     }
 
-    function formConfirmationWithId(idForm, message) {
-        var form = $(`${idForm}`);
+    function formConfirmation2(message) {
+        var form = event.target.closest('form');
         Swal.fire({
-            html: `<h3>${message}</h3>`,
+            html: `<h3 class="text-dark">${message}</h3>`,
             icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

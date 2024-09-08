@@ -7,6 +7,8 @@ use App\Http\Controllers\SuperAdmin\KelolaAkunController;
 use App\Http\Controllers\SuperAdmin\PersetujuanAkunController;
 use App\Http\Controllers\SuperAdmin\PersetujuanMobilController;
 use App\Http\Controllers\AdminRental\KelolaMobilController;
+use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\PembayaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,14 +21,22 @@ use App\Http\Controllers\AdminRental\KelolaMobilController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::controller(LandingPageController::class)->group(function () {
+    Route::get('/', 'index')->name('landingPage');
+    Route::get('/mobil/{id}', 'show')->name('landingPage.show');
 });
 
 Route::middleware('auth')->group(function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/dashboard', 'index')->name('dashboard');
     });
+    Route::name('pembayaran.')->group(function () {
+        Route::controller(PembayaranController::class)->group(function () {
+            Route::post('/pembayaran/store/{id}', 'store')->name('store');
+            Route::get('/invoice', 'invoice')->name('invoice');
+        });
+    });
+
     Route::middleware('role:Super Admin')->group(function () {
         Route::prefix('dashboard/superAdmin')->group(function () {
             Route::name('superAdmin.')->group(function () {
@@ -61,6 +71,7 @@ Route::middleware('auth')->group(function () {
                     Route::post('/kelolaMobil', 'store')->name('kelolaMobil.store');
                     Route::get('/kelolaMobil/{id}/edit', 'edit')->name('kelolaMobil.edit');
                     Route::put('/kelolaMobil/{id}', 'update')->name('kelolaMobil.update');
+                    Route::patch('/kelolaMobil/{id}', 'aktif')->name('kelolaMobil.aktif');
                     Route::delete('/kelolaMobil/{id}', 'destroy')->name('kelolaMobil.destroy');
                 });
             });

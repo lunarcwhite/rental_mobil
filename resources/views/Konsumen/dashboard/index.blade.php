@@ -1,11 +1,13 @@
 @extends('layouts.mobile.master')
 @section('topbarPageTitle')
-    Dashboard
+DaRental
 @endsection
 @section('pageTitle')
-    Dashboard
+DaRental
 @endsection
 @section('content')
+<div class="section mt-2">
+
     @can('accountNotVerified')
         @can('createProfile')
             <div class="card-header py-4 bg-primary d-flex flex-row align-items-center justify-content-between">
@@ -44,7 +46,5 @@
             </div>
         @endcan
     @endcan
-    @can('accountVerified')
-        Hello
-    @endcan
+</div>
 @endsection

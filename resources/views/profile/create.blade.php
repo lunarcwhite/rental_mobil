@@ -6,6 +6,7 @@
     Profile
 @endsection
 @section('content')
+<div class="section mt-2">
     <form id="createProfile" action="{{ route('profile.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="card">
@@ -30,5 +31,5 @@
             onclick="formConfirmation('Simpan Data?')">Simpan</button>
         <hr />
     </form>
-    
+</div>
 @endsection
