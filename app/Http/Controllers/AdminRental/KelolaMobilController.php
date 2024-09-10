@@ -8,6 +8,8 @@ use App\Models\Mobil;
 use App\Models\PersetujuanMobil;
 use Auth;
 use Storage;
+use App\Models\Pembayaran;
+use App\Models\Rental;
 
 class KelolaMobilController extends Controller
 {
@@ -15,8 +17,14 @@ class KelolaMobilController extends Controller
     {
         try {
             $idRental = Auth::user()->profileRental->id;
-            $data['mobils'] = Mobil::where('profileRentalId', $idRental)->get();
+            $rental = Rental::where('statusSelesai', 1)->whereColumn('rentals.pembayaranId', 'pembayarans.id');
+            $data['transaksiBerjalan'] = Pembayaran::where('profileRentalId', $idRental)
+                ->whereNotExists($rental)
+                ->count();
+
+            $data['mobils'] = Mobil::where('profileRentalId', $idRental)->orderBy('namaMobil', 'asc')->paginate(25);
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return view('errors.500');
         }
         return view('AdminRental.kelolaMobil.index')->with($data);
@@ -24,7 +32,13 @@ class KelolaMobilController extends Controller
 
     public function create()
     {
-        $data['mobil'] = Mobil::first();
+        try {
+            $rental = Rental::where('statusSelesai', 1)
+            ->whereColumn('rentals.pembayaranId', 'pembayarans.id');
+        $data['transaksiBerjalan'] = Pembayaran::where('profileRentalId', Auth::user()->profileRental->id)->whereNotExists($rental)->count();
+        } catch (\Throwable $th) {
+            return view('errors.500');
+        }
         return view('AdminRental.kelolaMobil.create')->with($data);
     }
 
@@ -38,7 +52,7 @@ class KelolaMobilController extends Controller
             'bahanBakar' => 'required',
             'harga' => 'required',
             'deskripsi' => 'required',
-            'gambar' => 'required|image|mimes:jpeg,png,jpg'
+            'gambar' => 'required|image|mimes:jpeg,png,jpg',
         ]);
 
         try {
@@ -60,8 +74,15 @@ class KelolaMobilController extends Controller
 
     public function edit($id)
     {
-        $data['mobil'] = Mobil::where('id', $id)->first();
-        $data['penolakans'] = PersetujuanMobil::where('mobilId', $id)->get();
+        try {
+            $data['mobil'] = Mobil::where('id', $id)->first();
+            $data['penolakans'] = PersetujuanMobil::where('mobilId', $id)->get();
+            $rental = Rental::where('statusSelesai', 1)
+            ->whereColumn('rentals.pembayaranId', 'pembayarans.id');
+        $data['transaksiBerjalan'] = Pembayaran::where('profileRentalId', Auth::user()->profileRental->id)->whereNotExists($rental)->count();
+        } catch (\Throwable $th) {
+            return view('errors.500');
+        }
         return view('AdminRental.kelolaMobil.edit')->with($data);
     }
 
@@ -75,14 +96,14 @@ class KelolaMobilController extends Controller
             'bahanBakar' => 'required',
             'harga' => 'required',
             'deskripsi' => 'required',
-            'gambar' => 'image|mimes:jpeg,png,jpg'
+            'gambar' => 'image|mimes:jpeg,png,jpg',
         ]);
 
         try {
             $mobil = Mobil::where('id', $id)->first();
             $profileRental = Auth::user()->profileRental->id;
             $data = $request->except('_method', '_token');
-            if(array_key_exists('gambar', $data)){
+            if (array_key_exists('gambar', $data)) {
                 $foto = $data['gambar'];
                 Storage::delete('public/mobil/' . $mobil->gambar);
                 $extension = $foto->extension();
@@ -102,7 +123,7 @@ class KelolaMobilController extends Controller
     {
         try {
             Mobil::where('id', $id)->update([
-                'statusAktif' => $request->statusAktif
+                'statusAktif' => $request->statusAktif,
             ]);
         } catch (\Throwable $th) {
             return redirect()->back()->withErrors('Aksi gagal!')->withInput();

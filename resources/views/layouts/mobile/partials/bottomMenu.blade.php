@@ -5,10 +5,11 @@
             <strong>Dashboard</strong>
         </div>
     </a>
-    <a href="https://tracker.id/mobile/tracking.php" class="item">
+    <a href="{{ route('adminRental.transaksi.index') }}" class="item">
         <div class="col">
-            <ion-icon name="map-outline"></ion-icon>
-            <strong>GPS</strong>
+            <ion-icon name="wallet-outline"></ion-icon>
+            <span class="badge badge-danger">{{ $transaksiBerjalan }}</span>
+            <strong>Transaksi</strong>
         </div>
     </a>
     <a href="{{ route('adminRental.kelolaMobil.index') }}" class="item">
@@ -17,16 +18,10 @@
             <strong>Mobil</strong>
         </div>
     </a>
-    <a href="app-pages.html" class="item">
+    <a href="https://tracker.id/mobile/tracking.php" class="item">
         <div class="col">
-            <ion-icon name="layers-outline"></ion-icon>
-            <strong>Profile</strong>
-        </div>
-    </a>
-    <a href="app-pages.html" class="item">
-        <div class="col">
-            <ion-icon name="layers-outline"></ion-icon>
-            <strong>Profile</strong>
+            <ion-icon name="map-outline"></ion-icon>
+            <strong>GPS</strong>
         </div>
     </a>
 </div>

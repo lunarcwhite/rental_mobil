@@ -7,8 +7,13 @@ use App\Http\Controllers\SuperAdmin\KelolaAkunController;
 use App\Http\Controllers\SuperAdmin\PersetujuanAkunController;
 use App\Http\Controllers\SuperAdmin\PersetujuanMobilController;
 use App\Http\Controllers\AdminRental\KelolaMobilController;
+use App\Http\Controllers\AdminRental\TransaksiController;
 use App\Http\Controllers\LandingPageController;
-use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\Konsumen\PembayaranController;
+use App\Http\Controllers\Konsumen\RiwayatRentalController;
+use App\Http\Controllers\AdminRental\MonitoringKonsumenController;
+use App\Http\Controllers\AdminRental\RiwayatTransaksiController;
+use App\Http\Controllers\AdminRental\LaporanKeuanganController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,13 +35,26 @@ Route::middleware('auth')->group(function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/dashboard', 'index')->name('dashboard');
     });
-    Route::name('pembayaran.')->group(function () {
-        Route::controller(PembayaranController::class)->group(function () {
-            Route::post('/pembayaran/store/{id}', 'store')->name('store');
-            Route::get('/invoice', 'invoice')->name('invoice');
+    Route::middleware('role:Konsumen')->group(function () {
+        Route::prefix('/konsumen')->group(function () {
+            Route::name('pembayaran.')->group(function () {
+                Route::controller(PembayaranController::class)->group(function () {
+                    Route::get('/pembayaran', 'index')->name('index');
+                    Route::post('/pembayaran/store/{id}', 'store')->name('store');
+                    Route::get('/pembayaran/checkout/{id}', 'checkout')->name('checkout');
+                    Route::get('/pembayaran/invoice/{id}', 'invoice')->name('invoice');
+                });
+            });
+            Route::name('konsumen.')->group(function () {
+                Route::name('riwayatRental.')->group(function () {
+                    Route::controller(RiwayatRentalController::class)->group(function () {
+                        Route::get('/riwayatRental', 'index')->name('index');
+                        Route::post('/ratingMobil/{id}', 'ratingMobil')->name('ratingMobil');
+                    });
+                });
+            });
         });
     });
-
     Route::middleware('role:Super Admin')->group(function () {
         Route::prefix('dashboard/superAdmin')->group(function () {
             Route::name('superAdmin.')->group(function () {
@@ -74,13 +92,32 @@ Route::middleware('auth')->group(function () {
                     Route::patch('/kelolaMobil/{id}', 'aktif')->name('kelolaMobil.aktif');
                     Route::delete('/kelolaMobil/{id}', 'destroy')->name('kelolaMobil.destroy');
                 });
+                Route::controller(TransaksiController::class)->group(function () {
+                    Route::get('/transaksi', 'index')->name('transaksi.index');
+                    Route::post('/transaksi/store/{id}', 'mulai')->name('transaksi.mulai');
+                    Route::patch('/transaksi/selesai/{id}', 'finish')->name('transaksi.finish');
+                });
+                Route::controller(RiwayatTransaksiController::class)->group(function () {
+                    Route::get('/riwayatTransaksi', 'index')->name('riwayatTransaksi.index');
+                    Route::get('/riwayatTransaksi/invoice/{id}', 'invoice')->name('riwayatTransaksi.invoice');
+                });
+                Route::controller(MonitoringKonsumenController::class)->group(function () {
+                    Route::get('/monitoringKonsumen', 'index')->name('monitoringKonsumen.index');
+                    Route::post('/monitoringKonsumen/blokir/{id}', 'blokir')->name('monitoringKonsumen.blokir');
+                    Route::delete('/monitoringKonsumen/bukaBlokir/{id}', 'bukaBlokir')->name('monitoringKonsumen.bukaBlokir');
+                });
+                Route::controller(MonitoringKonsumenController::class)->group(function () {
+                    Route::get('/monitoringKonsumen', 'index')->name('monitoringKonsumen.index');
+                    Route::post('/monitoringKonsumen/blokir/{id}', 'blokir')->name('monitoringKonsumen.blokir');
+                    Route::delete('/monitoringKonsumen/bukaBlokir/{id}', 'bukaBlokir')->name('monitoringKonsumen.bukaBlokir');
+                });
             });
         });
     });
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'index')->name('profile.index');
-        Route::get('/profile/create', 'create')->name('profile.create');
-        Route::post('/profile', 'store')->name('profile.store');
+        Route::get('/profile/create', 'create')->name('profile.create')->middleware('haveProfile');
+        Route::post('/profile', 'store')->name('profile.store')->middleware('haveProfile');
         Route::put('/profile', 'update')->name('profile.update');
         Route::patch('/profile/akun', 'akunUpdate')->name('profile.akunUpdate');
         Route::delete('/profile', 'destroy')->name('profile.destroy');

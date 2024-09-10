@@ -10,15 +10,23 @@ use App\Models\User;
 use Storage;
 use Illuminate\Validation\Rule;
 use App\Models\PersetujuanAkun;
+use App\Models\Rental;
+use App\Models\Pembayaran;
 
 class ProfileController extends Controller
 {
-        /**
+    /**
      * Display the user's profile form.
      */
     public function index()
     {
         try {
+            if (Auth::check() && Auth::user()->roleId == 2) {
+                $rental = Rental::where('statusSelesai', 1)->whereColumn('rentals.pembayaranId', 'pembayarans.id');
+                $data['transaksiBerjalan'] = Pembayaran::where('profileRentalId', Auth::user()->profileRental->id)
+                    ->whereNotExists($rental)
+                    ->count();
+            }
             $user = Auth::user();
             $data['profile'] = Profile::where('userId', $user->id)->first();
             $data['user'] = User::where('id', $user->id)->first();
@@ -33,20 +41,27 @@ class ProfileController extends Controller
     public function create()
     {
         try {
+            if (Auth::check() && Auth::user()->roleId == 2) {
+                $rental = Rental::where('statusSelesai', 1)->whereColumn('rentals.pembayaranId', 'pembayarans.id');
+                $data['transaksiBerjalan'] = Pembayaran::where('profileRentalId', Auth::user()->profileRental->id)
+                    ->whereNotExists($rental)
+                    ->count();
+                return view('profile.create')->with($data);
+            }
             return view('profile.create');
         } catch (\Throwable $th) {
             return view('errors.500');
         }
     }
 
-        /**
+    /**
      * store the user's profile information.
      */
     public function store(Request $request)
     {
         $user = Auth::user();
         // dd($filename);
-        if($user->roleId == 3){
+        if ($user->roleId == 3) {
             $request->validate([
                 'profile.nik' => 'required|digits:16',
                 'profile.namaLengkap' => 'required',
@@ -59,7 +74,7 @@ class ProfileController extends Controller
                 'profile.noHp' => 'required',
                 'profile.kyc' => 'required|image|mimes:jpeg,png,jpg',
             ]);
-        }else{
+        } else {
             $request->validate([
                 'profile.nik' => 'required|digits:16',
                 'profile.namaLengkap' => 'required',
@@ -79,7 +94,7 @@ class ProfileController extends Controller
                 'profileRental.noHpRental' => 'required',
             ]);
         }
-        
+
         try {
             $profile = $request->profile;
             $foto = $profile['kyc'];
@@ -98,7 +113,6 @@ class ProfileController extends Controller
                 $profileRental['userId'] = $user->id;
                 ProfileRental::create($profileRental);
             }
-            
         } catch (\Throwable $th) {
             // dd($th->getMessage());
             return redirect()->back()->withErrors('Aksi gagal!')->withInput();
@@ -110,7 +124,7 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         // dd($request->profile);
-        if($user->roleId == 3){
+        if ($user->roleId == 3) {
             $request->validate([
                 'profile.nik' => 'required|digits:16',
                 'profile.namaLengkap' => 'required',
@@ -123,7 +137,7 @@ class ProfileController extends Controller
                 'profile.noHp' => 'required',
                 'profile.kyc' => 'image|mimes:jpeg,png,jpg',
             ]);
-        }else{
+        } else {
             $request->validate([
                 'profile.nik' => 'required|digits:16',
                 'profile.namaLengkap' => 'required',
@@ -143,11 +157,11 @@ class ProfileController extends Controller
                 'profileRental.noHpRental' => 'required',
             ]);
         }
-        
+
         try {
             $profile = $request->profile;
             // dd($profile);
-            if(array_key_exists('kyc', $profile)){
+            if (array_key_exists('kyc', $profile)) {
                 $foto = $profile['kyc'];
                 Storage::delete('public/kyc/' . $user->profile->kyc);
                 $extension = $foto->extension();
@@ -164,13 +178,11 @@ class ProfileController extends Controller
                 $profileRental['userId'] = $user->id;
                 ProfileRental::where('userId', $user->id)->update($profileRental);
             }
-            
         } catch (\Throwable $th) {
             // dd($th->getMessage());
             return redirect()->back()->withErrors('Aksi gagal!')->withInput();
         }
         return redirect()->route('dashboard')->with('success', 'Aksi berhasil');
-        
     }
 
     public function akunUpdate(Request $request)
@@ -178,25 +190,25 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         // dd($request->all());
-        
+
         $request->validate([
             'current_password' => ['current_password'],
             'password' => ['min:8'],
             'name' => ['required', Rule::unique('users')->ignore($user->id)],
-            'email' => ['required', Rule::unique('users')->ignore($user->id), 'email']
+            'email' => ['required', Rule::unique('users')->ignore($user->id), 'email'],
         ]);
 
         try {
             $updateUser = $request->except('_method', '_token', 'current_password');
-            if($request->password != null){
+            if ($request->password != null) {
                 $updateUser['password'] = bcrypt($request->password);
                 // dd($updateUser);
-            }else{
+            } else {
                 unset($updateUser['password']);
             }
             User::where('id', $user->id)->update($updateUser);
         } catch (\Throwable $th) {
-            dd($th->getMessage());
+            // dd($th->getMessage());
             return redirect()->back()->withErrors('Aksi gagal!')->withInput();
         }
         return redirect()->back()->with('success', 'Aksi berhasil!');
@@ -217,7 +229,7 @@ class ProfileController extends Controller
             Storage::delete('public/kyc/' . $user->profile->kyc);
 
             Auth::logout();
-    
+
             $user->delete();
             $request->session()->invalidate();
             $request->session()->regenerateToken();

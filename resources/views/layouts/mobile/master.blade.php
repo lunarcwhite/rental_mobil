@@ -64,6 +64,14 @@
     @include('layouts.mobile.partials.sidebar')
     <!-- * App Sidebar -->
 
+    <div id="toast-12" class="toast-box toast-center">
+        <div class="in">
+            <div class="text">
+                Berhasil disalin
+            </div>
+        </div>
+    </div>
+
     <!-- ///////////// Js Files ////////////////////  -->
     <!-- Jquery -->
     <script src="{{ asset('mobile/assets/js/lib/jquery-3.4.1.min.js') }}"></script>
@@ -79,7 +87,7 @@
     <script src="{{ asset('mobile/assets/js/base.js') }}"></script>
 
     @include('layouts.alert')
-    {{-- @include('layouts.dataTable') --}}
+    @include('layouts.dataTable')
     @stack('jsRental')
     @stack('js')
 </body>

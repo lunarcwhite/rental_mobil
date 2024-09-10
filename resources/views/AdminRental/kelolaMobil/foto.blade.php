@@ -7,7 +7,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <img src="{{ url(Storage::url('mobil/'. $mobil->gambar)) }}" class="img-fluid" alt="">
+                @if ($mobil->gambar == 'test')
+                    <img src="{{ asset('img/mobil.jpg') }}" class="img-fluid" alt="image">
+                @else
+                <img src="{{ url(Storage::url('mobil/' . $mobil->gambar)) }}" class="img-fluid" alt="">
+                @endif
             </div>
         </div>
     </div>

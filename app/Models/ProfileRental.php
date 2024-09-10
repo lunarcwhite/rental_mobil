@@ -23,9 +23,15 @@ class ProfileRental extends Model
     }
 
     /**
-     * Get all of the persetujuanMobil for the ProfileRental
+     * Get all of the transaksi for the ProfileRental
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
+    public function transaksi(): HasMany
+    {
+        return $this->hasMany(Transaksi::class, 'profileRentalId');
+    }
+
+     
 
 }

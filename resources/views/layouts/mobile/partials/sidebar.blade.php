@@ -10,7 +10,11 @@
                     </div>
                     <div class="in">
                         @auth
-                            <strong>{{ Auth::user()->name }}</strong>
+                        @if (Auth::user()->roleId == 2)
+                        <strong>{{ Auth::user()->profileRental->namaRental }}</strong>
+                        @else    
+                        <strong>{{ Auth::user()->profile->namaLengkap }}</strong>
+                        @endif
                             <div class="text-muted">
                             @if (Auth::user()->accountVerified == 1)
                             Profile Terverifikasi
@@ -66,7 +70,7 @@
                     </li>
                     @can('Konsumen')
                     <li>
-                        <a href="{{ route('pembayaran.invoice') }}" class="item">
+                        <a href="{{ route('pembayaran.index') }}" class="item">
                             <div class="icon-box">
                                 <ion-icon name="card-outline"></ion-icon>
                             </div>
@@ -76,12 +80,34 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('landingPage') }}" class="item">
+                        <a href="{{ route('konsumen.riwayatRental.index') }}" class="item">
                             <div class="icon-box">
                                 <ion-icon name="archive-outline"></ion-icon>
                             </div>
                             <div class="in">
                                 Riwayat Rental
+                            </div>
+                        </a>
+                    </li>  
+                    @endcan
+                    @can('Admin Rental')
+                    <li>
+                        <a href="{{ route('adminRental.riwayatTransaksi.index') }}" class="item">
+                            <div class="icon-box">
+                                <ion-icon name="card-outline"></ion-icon>
+                            </div>
+                            <div class="in">
+                                Riwayat Transaksi
+                            </div>
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="{{ route('adminRental.monitoringKonsumen.index') }}" class="item">
+                            <div class="icon-box">
+                                <ion-icon name="people-outline"></ion-icon>
+                            </div>
+                            <div class="in">
+                                Monitoring Konsumen
                             </div>
                         </a>
                     </li>  

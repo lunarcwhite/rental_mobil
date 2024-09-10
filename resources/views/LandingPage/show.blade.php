@@ -59,7 +59,7 @@
 
 
     <div class="section mt-4">
-        <button type="button" class="btn btn-outline-primary btn-block" data-toggle="modal"
+        <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
             data-target="#durasiRental">
             Rental Sekarang
         </button>
@@ -73,6 +73,7 @@
         </div>
         <div class="pt-2 pb-2">
             <!-- comment block -->
+            @forelse ($ratings as $rating)
             <div class="comment-block">
                 <!--item -->
                 <div class="item">
@@ -82,26 +83,24 @@
                     </div>
                     <div class="in">
                         <div class="comment-header">
-                            <h4 class="title">Diego Morata</h4>
-                            <span class="time">just now</span>
+                            <h4 class="title">{{ $rating->user->profile->namaLengkap }}</h4>
+                            <span class="time">{{ $rating->created_at }}</span>
                         </div>
                         <div class="text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            {{ $rating->ulasan }}
                         </div>
                         <div class="comment-footer">
-                            <a href="javascript:;" class="comment-button">
-                                <ion-icon name="heart-outline"></ion-icon>
-                                Like (523)
-                            </a>
-                            <a href="javascript:;" class="comment-button">
-                                <ion-icon name="chatbubble-outline"></ion-icon>
-                                Reply
-                            </a>
+                            @for ($i = 1; $i <= $rating->bintang; $i++)
+                            <ion-icon name="star"></ion-icon>    
+                            @endfor
                         </div>
                     </div>
                 </div>
                 <!-- * item -->
             </div>
+            @empty
+                
+            @endforelse
             <!-- * comment block -->
         </div>
     </div>

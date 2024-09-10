@@ -10,15 +10,10 @@
             <div class="modal-body">
                 <form action="{{ route('pembayaran.store', $mobil->id) }}" method="post">
                     @csrf
-                    @include('form.filterMobilForm')
+                    @include('form.tanggalRentalMobilForm')
                     <button type="button" onclick="formConfirmation('Lanjutkan ke pembayaran?')" class="btn btn-block btn-primary">Lanjutkan Ke Pembayaran</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-@push('js')
-    <script>
-        document.getElementById('kecamatanGroup').remove();
-    </script>
-@endpush

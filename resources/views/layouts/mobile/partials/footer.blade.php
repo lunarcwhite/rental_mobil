@@ -12,9 +12,6 @@
         <a href="javascript:;" class="btn btn-icon btn-sm btn-twitter">
             <ion-icon name="logo-twitter" role="img" class="md hydrated" aria-label="logo twitter"></ion-icon>
         </a>
-        <a href="javascript:;" class="btn btn-icon btn-sm btn-linkedin">
-            <ion-icon name="logo-linkedin" role="img" class="md hydrated" aria-label="logo linkedin"></ion-icon>
-        </a>
         <a href="javascript:;" class="btn btn-icon btn-sm btn-instagram">
             <ion-icon name="logo-instagram" role="img" class="md hydrated" aria-label="logo instagram"></ion-icon>
         </a>
