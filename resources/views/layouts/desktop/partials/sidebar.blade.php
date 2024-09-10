@@ -65,7 +65,7 @@
     Transaksi
   </div>
   <li class="nav-item">
-    <a class="nav-link" href="{{ route('superAdmin.persetujuanAkun.index') }}">
+    <a class="nav-link" href="{{ route('superAdmin.historiTransaksi.index') }}">
       <i class="fas fa-fw fa-database"></i>
       <span>Histori Transaksi</span>
     </a>

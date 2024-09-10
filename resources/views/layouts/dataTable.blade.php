@@ -41,5 +41,34 @@
             }]
         });
 
+        $('#dataTableLandscape').DataTable({
+            dom: 'Bfrtip',
+            buttons: [{
+                extend: 'collection',
+                text: 'Export',
+                buttons: [{
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: ':not(:last-child)' // Mengekspor semua kecuali kolom terakhir
+                        }
+                    },
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: ':not(:last-child)' // Mengekspor semua kecuali kolom terakhir
+                        }
+                    },
+                    {
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: ':not(:last-child)' // Mengekspor semua kecuali kolom terakhir
+                        },
+                        orientation: 'landscape',
+                        pageSize: 'A4',
+                    }
+                ]
+            }]
+        });
+
     });
 </script>

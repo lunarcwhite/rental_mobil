@@ -39,4 +39,14 @@ class Pembayaran extends Model
         return $this->hasOne(Rental::class, 'pembayaranId');
     }
 
+    /**
+     * Get the user that owns the Pembayaran
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'userId');
+    }
+
 }

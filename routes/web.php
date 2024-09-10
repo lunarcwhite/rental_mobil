@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SuperAdmin\KelolaAkunController;
 use App\Http\Controllers\SuperAdmin\PersetujuanAkunController;
 use App\Http\Controllers\SuperAdmin\PersetujuanMobilController;
+use App\Http\Controllers\SuperAdmin\HistoriTransaksiController;
 use App\Http\Controllers\AdminRental\KelolaMobilController;
 use App\Http\Controllers\AdminRental\TransaksiController;
 use App\Http\Controllers\LandingPageController;
@@ -76,6 +77,10 @@ Route::middleware('auth')->group(function () {
                     Route::get('/persetujuanMobil/{id}', 'mobil')->name('persetujuanMobil.mobil');
                     Route::post('/persetujuanMobil/setujuiMobil/{id}', 'setujui')->name('persetujuanMobil.setujui');
                     Route::post('/persetujuanMobil/tolakMobil/{id}', 'tolak')->name('persetujuanMobil.tolak');
+                });
+                Route::controller(HistoriTransaksiController::class)->group(function () {
+                    Route::get('/historiTransaksi', 'index')->name('historiTransaksi.index');
+                    Route::get('/historiTransaksi/invoice/{id}', 'invoice')->name('historiTransaksi.invoice');
                 });
             });
         });

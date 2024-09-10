@@ -66,7 +66,6 @@ Daftar Transaksi
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
 @endsection
