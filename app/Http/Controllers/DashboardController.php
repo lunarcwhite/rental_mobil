@@ -8,6 +8,7 @@ use App\Models\PersetujuanAkun;
 use App\Models\Pembayaran;
 use App\Models\Rental;
 use App\Models\Mobil;
+use App\Models\Profile;
 
 class DashboardController extends Controller
 {
@@ -16,7 +17,19 @@ class DashboardController extends Controller
         $user = Auth::user();
         $data['penolakans'] = PersetujuanAkun::where('userId', $user->id)->get();
         if ($user->roleId == 1) {
-            return view('superAdmin.dashboard.index');
+            $data['mobil'] = Mobil::count();
+            $data['konsumen'] = Profile::count();
+            $data['transaksi'] = Pembayaran::count();
+            $pendapatans = Pembayaran::whereMonth('created_at', date('m'))
+                ->whereYear('created_at', date('Y'))
+                ->where('statusPembayaran', 1)
+                ->get();
+            $pendapatan = 0;
+            foreach ($pendapatans as $key => $value) {;
+                $pendapatan += $value->pendapatanRental;
+            }
+            $data['pendapatan'] = $pendapatan;
+            return view('superAdmin.dashboard.index')->with($data);
         } elseif ($user->roleId == 2) {
             $idRental = $user->profileRental->id;
             $data['mobil'] = Mobil::where('profileRentalId', $idRental)->count();
