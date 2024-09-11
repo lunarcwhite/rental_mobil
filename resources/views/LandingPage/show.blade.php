@@ -4,8 +4,13 @@
 @endsection
 @section('topbarRightButton')
     <a href="page-blogpost.html#" class="headerButton" data-toggle="modal" data-target="#actionSheetShare">
-        <ion-icon name="share-outline"></ion-icon>
+        <ion-icon name="share-social-outline"></ion-icon>
     </a>
+    <form action="" method="post">
+        <a href="{{ route('chat', encrypt($mobil->id)) }}" class="headerButton">
+            <ion-icon name="chatbubbles-outline"></ion-icon>
+        </a>
+    </form>
 @endsection
 @section('content')
     <div class="blog-post">

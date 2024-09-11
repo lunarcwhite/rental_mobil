@@ -15,6 +15,7 @@ use App\Http\Controllers\Konsumen\RiwayatRentalController;
 use App\Http\Controllers\AdminRental\MonitoringKonsumenController;
 use App\Http\Controllers\AdminRental\RiwayatTransaksiController;
 use App\Http\Controllers\AdminRental\LaporanKeuanganController;
+use App\Http\Controllers\PusherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,11 @@ Route::controller(LandingPageController::class)->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::controller(PusherController::class)->group(function () {
+        Route::get('/chat/{id}', 'index')->name('chat');
+        Route::post('/broadcast', 'broadcast')->name('broadcast');
+        Route::post('/receive', 'receive')->name('receive');
+    });
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/dashboard', 'index')->name('dashboard');
     });
