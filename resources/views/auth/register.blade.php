@@ -66,7 +66,7 @@
                   </form>
                   <hr>
                   <div class="text-center">
-                    <a class="font-weight-bold small" href="login.html">Sudah punya akun?</a>
+                    <a class="font-weight-bold small" href="{{route('login')}}">Sudah punya akun?</a>
                   </div>
                   <div class="text-center">
                   </div>
