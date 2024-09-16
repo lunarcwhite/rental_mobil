@@ -19,6 +19,7 @@ Daftar Transaksi
                         <tr>
                             <th>#</th>
                             <th>No Order</th>
+                            <th>Nama Konsumen</th>
                             <th>Mobil</th>
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Kembali</th>
@@ -31,6 +32,7 @@ Daftar Transaksi
                         @forelse ($pembayarans as $no => $pembayaran)
                             <tr>
                                 <td>{{ $no + 1 }}</td>
+                                <td>{{$pembayaran->user->profile->namaLengkap}}</td>
                                 <td>{{ $pembayaran->kodePembayaran }}</td>
                                 <td>{{ $pembayaran->mobil->namaMobil }}</td>
                                 <td>{{ $pembayaran->tanggalMulai }}</td>
@@ -44,7 +46,7 @@ Daftar Transaksi
                                 </td>
                                 <td>
                                     @if ($pembayaran->rental && $pembayaran->rental->statusSelesai == 1)
-                                    <span class="badge badge-success">Rental selesai</span>   
+                                    <span class="badge badge-success">Rental selesai</span>
                                     @elseif ($pembayaran->rental)
                                     <span class="badge badge-primary">Mobil sedang direntalkan</span>
                                     @elseif (date('Y-m-d') >= $pembayaran->tanggalMulai && date('Y-m-d') <= $pembayaran->tanggalKembali)

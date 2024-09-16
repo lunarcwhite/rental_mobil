@@ -10,10 +10,14 @@
                     </div>
                     <div class="in">
                         @auth
-                        @if (Auth::user()->roleId == 2)
-                        <strong>{{ Auth::user()->profileRental->namaRental }}</strong>
-                        @else    
-                        <strong>{{ Auth::user()->profile->namaLengkap }}</strong>
+                        @if (Auth::user()->accountVerified == 1)
+                            @if (Auth::user()->roleId == 2)
+                            <strong>{{ Auth::user()->profileRental->namaRental }}</strong>
+                            @else
+                            <strong>{{ Auth::user()->profile->namaLengkap }}</strong>
+                            @endif
+                        @else
+                            <strong>{{ Auth::user()->nama }}</strong>
                         @endif
                             <div class="text-muted">
                             @if (Auth::user()->accountVerified == 1)
@@ -68,6 +72,7 @@
                             </div>
                         </a>
                     </li>
+                    @can('accountVerified')
                     @can('Konsumen')
                     <li>
                         <a href="{{ route('pembayaran.index') }}" class="item">
@@ -88,7 +93,7 @@
                                 Riwayat Rental
                             </div>
                         </a>
-                    </li>  
+                    </li>
                     @endcan
                     @can('Admin Rental')
                     <li>
@@ -100,7 +105,7 @@
                                 Riwayat Transaksi
                             </div>
                         </a>
-                    </li> 
+                    </li>
                     <li>
                         <a href="{{ route('adminRental.monitoringKonsumen.index') }}" class="item">
                             <div class="icon-box">
@@ -110,7 +115,8 @@
                                 Monitoring Konsumen
                             </div>
                         </a>
-                    </li>  
+                    </li>
+                    @endcan
                     @endcan
                     <li>
                         <div class="item">
