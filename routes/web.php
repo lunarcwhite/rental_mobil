@@ -7,6 +7,7 @@ use App\Http\Controllers\SuperAdmin\KelolaAkunController;
 use App\Http\Controllers\SuperAdmin\PersetujuanAkunController;
 use App\Http\Controllers\SuperAdmin\PersetujuanMobilController;
 use App\Http\Controllers\SuperAdmin\HistoriTransaksiController;
+use App\Http\Controllers\SuperAdmin\LaporanPendapatanController;
 use App\Http\Controllers\AdminRental\KelolaMobilController;
 use App\Http\Controllers\AdminRental\TransaksiController;
 use App\Http\Controllers\LandingPageController;
@@ -31,6 +32,7 @@ use App\Http\Controllers\PusherController;
 Route::controller(LandingPageController::class)->group(function () {
     Route::get('/', 'index')->name('landingPage');
     Route::get('/mobil/{id}', 'show')->name('landingPage.show');
+    Route::get('/syaratKetentuan', 'syaratKetentuan')->name('landingPage.syaratKetentuan');
 });
 
 Route::middleware('auth')->group(function () {
@@ -88,6 +90,9 @@ Route::middleware('auth')->group(function () {
                     Route::get('/historiTransaksi', 'index')->name('historiTransaksi.index');
                     Route::get('/historiTransaksi/invoice/{id}', 'invoice')->name('historiTransaksi.invoice');
                 });
+                Route::controller(LaporanPendapatanController::class)->group(function () {
+                    Route::get('/laporanPendapatan', 'index')->name('laporanPendapatan.index');
+                });
             });
         });
     });
@@ -107,6 +112,7 @@ Route::middleware('auth')->group(function () {
                     Route::get('/transaksi', 'index')->name('transaksi.index');
                     Route::post('/transaksi/store/{id}', 'mulai')->name('transaksi.mulai');
                     Route::patch('/transaksi/selesai/{id}', 'finish')->name('transaksi.finish');
+                    Route::patch('/transaksi/batalkan/{id}', 'batalkan')->name('transaksi.batalkan');
                 });
                 Route::controller(RiwayatTransaksiController::class)->group(function () {
                     Route::get('/riwayatTransaksi', 'index')->name('riwayatTransaksi.index');
@@ -114,13 +120,12 @@ Route::middleware('auth')->group(function () {
                 });
                 Route::controller(MonitoringKonsumenController::class)->group(function () {
                     Route::get('/monitoringKonsumen', 'index')->name('monitoringKonsumen.index');
+                    Route::post('/monitoringKonsumen/ratingKonsumen/{id}', 'ratingKonsumen')->name('monitoringKonsumen.rating');
                     Route::post('/monitoringKonsumen/blokir/{id}', 'blokir')->name('monitoringKonsumen.blokir');
                     Route::delete('/monitoringKonsumen/bukaBlokir/{id}', 'bukaBlokir')->name('monitoringKonsumen.bukaBlokir');
                 });
-                Route::controller(MonitoringKonsumenController::class)->group(function () {
-                    Route::get('/monitoringKonsumen', 'index')->name('monitoringKonsumen.index');
-                    Route::post('/monitoringKonsumen/blokir/{id}', 'blokir')->name('monitoringKonsumen.blokir');
-                    Route::delete('/monitoringKonsumen/bukaBlokir/{id}', 'bukaBlokir')->name('monitoringKonsumen.bukaBlokir');
+                Route::controller(LaporanKeuanganController::class)->group(function () {
+                    Route::get('/laporanKeuangan', 'index')->name('laporanKeuangan.index');
                 });
             });
         });

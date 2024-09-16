@@ -18,9 +18,7 @@ class KelolaMobilController extends Controller
         try {
             $idRental = Auth::user()->profileRental->id;
             $rental = Rental::where('statusSelesai', 1)->whereColumn('rentals.pembayaranId', 'pembayarans.id');
-            $data['transaksiBerjalan'] = Pembayaran::where('profileRentalId', $idRental)
-                ->whereNotExists($rental)
-                ->count();
+            $data['transaksiBerjalan'] = Pembayaran::where('profileRentalId', $idRental)->whereNotExists($rental)->whereNot('statusPembayaran', 2)->count();
 
             $data['mobils'] = Mobil::where('profileRentalId', $idRental)->orderBy('namaMobil', 'asc')->paginate(25);
         } catch (\Throwable $th) {
@@ -33,9 +31,11 @@ class KelolaMobilController extends Controller
     public function create()
     {
         try {
-            $rental = Rental::where('statusSelesai', 1)
-            ->whereColumn('rentals.pembayaranId', 'pembayarans.id');
-        $data['transaksiBerjalan'] = Pembayaran::where('profileRentalId', Auth::user()->profileRental->id)->whereNotExists($rental)->count();
+            $rental = Rental::where('statusSelesai', 1)->whereColumn('rentals.pembayaranId', 'pembayarans.id');
+            $data['transaksiBerjalan'] = Pembayaran::where('profileRentalId', Auth::user()->profileRental->id)
+                ->whereNotExists($rental)
+                ->whereNot('statusPembayaran', 2)
+                ->count();
         } catch (\Throwable $th) {
             return view('errors.500');
         }
@@ -77,9 +77,11 @@ class KelolaMobilController extends Controller
         try {
             $data['mobil'] = Mobil::where('id', $id)->first();
             $data['penolakans'] = PersetujuanMobil::where('mobilId', $id)->get();
-            $rental = Rental::where('statusSelesai', 1)
-            ->whereColumn('rentals.pembayaranId', 'pembayarans.id');
-        $data['transaksiBerjalan'] = Pembayaran::where('profileRentalId', Auth::user()->profileRental->id)->whereNotExists($rental)->count();
+            $rental = Rental::where('statusSelesai', 1)->whereColumn('rentals.pembayaranId', 'pembayarans.id');
+            $data['transaksiBerjalan'] = Pembayaran::where('profileRentalId', Auth::user()->profileRental->id)
+                ->whereNotExists($rental)
+                ->whereNot('statusPembayaran', 2)
+                ->count();
         } catch (\Throwable $th) {
             return view('errors.500');
         }

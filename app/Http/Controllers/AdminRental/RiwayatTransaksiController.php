@@ -19,6 +19,7 @@ class RiwayatTransaksiController extends Controller
                 $rental = Rental::where('statusSelesai', 1)->whereColumn('rentals.pembayaranId', 'pembayarans.id');
             $data['transaksiBerjalan'] = Pembayaran::where('profileRentalId', Auth::user()->profileRental->id)
                 ->whereNotExists($rental)
+                ->whereNot('statusPembayaran', 2)
                 ->count();
         } catch (\Throwable $th) {
             return view('errors.500');
@@ -32,6 +33,7 @@ class RiwayatTransaksiController extends Controller
             $rental = Rental::where('statusSelesai', 1)->whereColumn('rentals.pembayaranId', 'pembayarans.id');
             $data['transaksiBerjalan'] = Pembayaran::where('profileRentalId', Auth::user()->profileRental->id)
                 ->whereNotExists($rental)
+                ->whereNot('statusPembayaran', 2)
                 ->count();
         } catch (\Throwable $th) {
             // dd($th->getMessage());

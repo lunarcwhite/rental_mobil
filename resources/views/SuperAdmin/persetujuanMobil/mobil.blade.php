@@ -30,6 +30,8 @@
 
         const formElements = document.querySelectorAll('#setujuiMobil input');
 
+        document.getElementById('deskripsi').disabled = true;
+
         // Tambahkan atribut disabled ke semua elemen
         formElements.forEach(element => {
             element.disabled = true;

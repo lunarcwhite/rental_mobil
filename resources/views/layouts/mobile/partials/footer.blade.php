@@ -1,7 +1,7 @@
 <div class="appFooter">
     {{-- <img src="{{ asset('mobile/assets/img/logo.png') }}" alt="icon" class="footer-logo mb-2"> --}}
     <div class="footer-title">
-        Copyright © CaRent 2024. All Rights Reserved.
+        Copyright © CRM 2024. All Rights Reserved.
     </div>
     <div>CaRent is Develop with Love.</div>
 

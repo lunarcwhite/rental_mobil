@@ -1,6 +1,6 @@
 @extends('layouts.mobile.master')
 @section('topbarPageTitle')
-    Daftar Transaksi
+    Riwayat Transaksi
 @endsection
 @section('topbarRightButton')
     <a href="{{ route('dashboard') }}" class="headerButton">
@@ -8,7 +8,7 @@
     </a>
 @endsection
 @section('pageTitle')
-Daftar Transaksi
+Riwayat Transaksi
 @endsection
 @section('content')
     <div class="section mt-2">
@@ -32,27 +32,25 @@ Daftar Transaksi
                         @forelse ($pembayarans as $no => $pembayaran)
                             <tr>
                                 <td>{{ $no + 1 }}</td>
-                                <td>{{$pembayaran->user->profile->namaLengkap}}</td>
                                 <td>{{ $pembayaran->kodePembayaran }}</td>
+                                <td>{{$pembayaran->user->profile->namaLengkap}}</td>
                                 <td>{{ $pembayaran->mobil->namaMobil }}</td>
                                 <td>{{ $pembayaran->tanggalMulai }}</td>
                                 <td>{{ $pembayaran->tanggalKembali }}</td>
                                 <td>
                                     @if ($pembayaran->statusPembayaran == 0)
-                                        <span class="badge badge-danger">Belum Dibayar</span>
+                                    <span class="badge badge-danger">Belum Dibayar</span>
                                     @else
-                                        <span class="badge badge-success">Sudah Dibayar</span>
-                                    @endif
+                                    <span class="badge badge-success">Sudah Dibayar</span>
+                                @endif
                                 </td>
                                 <td>
-                                    @if ($pembayaran->rental && $pembayaran->rental->statusSelesai == 1)
+                                    @if ($pembayaran->statusPembayaran == 2)
+                                    <span class="badge badge-danger">Dibatalkan</span>
+                                    @elseif ($pembayaran->rental && $pembayaran->rental->statusSelesai == 1)
                                     <span class="badge badge-success">Rental selesai</span>
-                                    @elseif ($pembayaran->rental)
+                                    @elseif ($pembayaran->rental && $pembayaran->rental->statusSelesai == 0 && $pembayaran->rental->statusBerjalan == 1)
                                     <span class="badge badge-primary">Mobil sedang direntalkan</span>
-                                    @elseif (date('Y-m-d') >= $pembayaran->tanggalMulai && date('Y-m-d') <= $pembayaran->tanggalKembali)
-                                        <span class="badge badge-primary">Dalam periode rental</span>
-                                    @elseif(date('Y-m-d') >= $pembayaran->tanggalKembali)
-                                    <span class="badge badge-primary">Melebihi periode rental</span>
                                     @else
                                     <span class="badge badge-primary">Menunggu masuk periode rental</span>
                                     @endif

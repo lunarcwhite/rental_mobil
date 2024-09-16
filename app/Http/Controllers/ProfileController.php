@@ -25,6 +25,7 @@ class ProfileController extends Controller
                 $rental = Rental::where('statusSelesai', 1)->whereColumn('rentals.pembayaranId', 'pembayarans.id');
                 $data['transaksiBerjalan'] = Pembayaran::where('profileRentalId', Auth::user()->profileRental->id)
                     ->whereNotExists($rental)
+                    ->whereNot('statusPembayaran', 2)
                     ->count();
             }
             $user = Auth::user();
@@ -41,17 +42,13 @@ class ProfileController extends Controller
     public function create()
     {
         try {
-            if (Auth::check() && Auth::user()->roleId == 2) {
-                $rental = Rental::where('statusSelesai', 1)->whereColumn('rentals.pembayaranId', 'pembayarans.id');
-                $data['transaksiBerjalan'] = Pembayaran::where('profileRentalId', Auth::user()->profileRental->id)
-                    ->whereNotExists($rental)
-                    ->count();
-                return view('profile.create')->with($data);
-            }
-            return view('profile.create');
+            $user = Auth::user();
+            $data['pengguna'] = $user;
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return view('errors.500');
         }
+        return view('profile.create')->with($data);
     }
 
     /**

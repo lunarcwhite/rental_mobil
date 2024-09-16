@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\Pembayaran;
 use App\Models\Mobil;
-use App\Models\Keuangan;
 
 class PembayaranController extends Controller
 {
@@ -32,7 +31,10 @@ class PembayaranController extends Controller
 
         $tanggal = $request->tanggalMulai;
         $pembayaran = Pembayaran::where('mobilId', $id)->where('tanggalMulai', '<=', $tanggal)->where('tanggalKembali', '>=', $tanggal)->first();
-        $pembayaran2 = Pembayaran::where('mobilId', $id)->where('tanggalMulai', '>=', $tanggal)->where('tanggalMulai', '<=', $request->tanggalKembali)->first();
+        $pembayaran2 = Pembayaran::where('mobilId', $id)
+            ->where('tanggalMulai', '>=', $tanggal)
+            ->where('tanggalMulai', '<=', $request->tanggalKembali)
+            ->first();
         if ($pembayaran != null) {
             // dd('ada');
             return redirect()->back()->withErrors('Mobil sudah memiliki jadwal rental pada tanggal tersebut!')->withInput();
@@ -51,7 +53,7 @@ class PembayaranController extends Controller
             // dd('ada');
             return redirect()->back()->withErrors('Tanggal mulai tidak boleh lebih kurang dari tanggal hari ini!')->withInput();
         }
-        
+
         $tanggalMulai = date_create($request->tanggalMulai);
 
         $tanggalKembali = date_create($request->tanggalKembali);
@@ -64,20 +66,7 @@ class PembayaranController extends Controller
         $harusBayar = ($mobil->harga + ($mobil->harga * 10) / 100) * $selisih;
         $pendapatanRental = $mobil->harga * $selisih;
 
-        $keuangan = Keuangan::where('profileRentalId', $mobil->profileRentalId)->first();
-        
         try {
-            if ($keuangan != null) {
-                $keuanganRental = $keuangan->totalPendapatan;
-                $keuangan->where('profileRentalId', $mobil->profileRentalId)->update([
-                    'totalPendapatan' => $keuanganRental + $pendapatanRental
-                ]);
-            } else {
-                Keuangan::create([
-                    'profileRentalId' => $mobil->profileRentalId,
-                    'totalPendapatan' => $pendapatanRental
-                ]);
-            }
             $data = $request->input();
             $data['mobilId'] = $id;
             $data['userId'] = Auth::user()->id;

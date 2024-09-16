@@ -71,7 +71,7 @@
     </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{{ route('superAdmin.kelolaAkun.index') }}">
+    <a class="nav-link" href="{{ route('superAdmin.laporanPendapatan.index') }}">
       <i class="fas fa-fw fa-money-bill-wave"></i>
       <span>Laporan Pendapatan</span>
     </a>

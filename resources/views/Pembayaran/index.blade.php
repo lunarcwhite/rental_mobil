@@ -18,6 +18,7 @@
                             <th>No Order</th>
                             <th>Total Pembayaran</th>
                             <th>Status Pembayaran</th>
+                            <th>Status Rental</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -31,7 +32,18 @@
                                 @if ($pembayaran->statusPembayaran == 0)
                                     <span class="badge badge-danger">Belum Dibayar</span>
                                 @else
-                                <span class="badge badge-success">Sudah Dibayar</span>
+                                    <span class="badge badge-success">Sudah Dibayar</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if ($pembayaran->statusPembayaran == 2)
+                                <span class="badge badge-danger">Dibatalkan</span>
+                                @elseif ($pembayaran->rental && $pembayaran->rental->statusSelesai == 1)
+                                <span class="badge badge-success">Rental selesai</span>
+                                @elseif ($pembayaran->rental && $pembayaran->rental->statusSelesai == 0 && $pembayaran->rental->statusBerjalan == 1)
+                                <span class="badge badge-primary">Mobil sedang direntalkan</span>
+                                @else
+                                <span class="badge badge-primary">Menunggu masuk periode rental</span>
                                 @endif
                             </td>
                             <td>

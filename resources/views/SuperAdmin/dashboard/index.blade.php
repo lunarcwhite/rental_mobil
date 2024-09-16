@@ -47,11 +47,11 @@
         <div class="card shadow-sm" style="border-radius: 10px;">
             <div class="card-body d-flex align-items-center">
                 <div class="rounded bg-secondary text-white p-3 mr-3" style="border-radius: 10px;">
-                    <i class="fas fa-wallet fa-2x"></i>
+                    <i class="fas fa-chalkboard-teacher fa-2x"></i>
                 </div>
                 <div>
-                    <h3 class="mb-0">Pendapatan Bulan Ini</h3>
-                    <h1 class="font-weight-bold mb-0">Rp. {{ $pendapatan }}</h1>
+                    <h3 class="mb-0">Total Rental</h3>
+                    <h1 class="font-weight-bold mb-0">Rp. {{ $rental }}</h1>
                 </div>
             </div>
         </div>

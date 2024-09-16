@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('penarikan_pendapatans', function (Blueprint $table) {
+        Schema::create('withdraws', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('profileRentalId')->unsigned();
+            $table->bigInteger('userId')->unsigned();
             $table->integer('totalPenarikan')->unsigned()->nullable();
             $table->text('metodePenarikan')->nullable();
             $table->timestamps();
 
-            $table->foreign('profileRentalId')->references('id')->on('profile_rentals')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('userId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

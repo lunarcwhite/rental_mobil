@@ -90,4 +90,14 @@ class User extends Authenticatable
             return Auth::user()->role->namaRole;
         }
     }
+
+    /**
+     * Get the keuangan associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function keuangan(): HasOne
+    {
+        return $this->hasOne(Keuangan::class, 'userId');
+    }
 }

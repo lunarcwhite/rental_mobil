@@ -9,15 +9,15 @@ class Keuangan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['profileRentalId', 'totalPendapatan', 'totalPenarikan'];
+    protected $fillable = ['userId', 'saldoTersimpan'];
 
     /**
      * Get the profileRental that owns the Keuangan
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function profileRental(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(ProfileRental::class, 'profileRentalId');
+        return $this->belongsTo(User::class, 'userId');
     }
 }

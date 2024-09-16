@@ -51,7 +51,7 @@
                     @auth
                     @cannot('accountVerified')
                     <li>
-                        <a href="{{ route('dashboard') }}" class="item">
+                        <a href="{{ route('profile.create') }}" class="item">
                             <div class="icon-box">
                                 <ion-icon name="person-outline"></ion-icon>
                             </div>
@@ -61,6 +61,17 @@
                         </a>
                     </li>
                     @endcannot
+                    <li>
+                        <div class="item">
+                            <div class="icon-box">
+                                <ion-icon name="wallet-outline"></ion-icon>
+                            </div>
+                            <div class="in">
+                                <div>Rp. @php $retVal = (Auth::user()->keuangan !== null) ? Auth::user()->keuangan->saldoTersimpan : '0' ; echo $retVal @endphp</div>
+                                <button class="btn btn-sm btn-primary">Withdraw</button>
+                            </div>
+                        </div>
+                    </li>
                     @endauth
                     <li>
                         <a href="{{ route('landingPage') }}" class="item">
@@ -116,6 +127,16 @@
                             </div>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('adminRental.laporanKeuangan.index') }}" class="item">
+                            <div class="icon-box">
+                                <ion-icon name="cash-outline"></ion-icon>
+                            </div>
+                            <div class="in">
+                                Laporan Keuangan
+                            </div>
+                        </a>
+                    </li>
                     @endcan
                     @endcan
                     <li>
@@ -141,7 +162,7 @@
                     <!-- sidebar buttons -->
                     <div class="sidebar-buttons">
                         @can('accountVerified')
-                            <a href="{{ route('profile.index') }}" data-toggle="tooltip" data-placement="top" title="Profile"
+                            <a href="{{ route('profile.index') }}" data-toggle="tooltip" data-placement="right" title="Profile"
                                 class="button">
                                 <ion-icon name="person-outline"></ion-icon>
                             </a>
@@ -149,7 +170,7 @@
                         <a href="javascript:;" class="button">
                             <ion-icon name="settings-outline"></ion-icon>
                         </a>
-                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Logout"
+                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="right" title="Logout"
                             onclick="formConfirmation2('Anda akan logout?')" class="button">
                             <ion-icon name="log-out-outline"></ion-icon>
                         </a>

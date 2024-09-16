@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('keuangans', function (Blueprint $table) {
+        Schema::create('rating_konsumens', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('userId')->unsigned();
-            $table->integer('saldoTersimpan')->default(0);
+            $table->tinyInteger('bintang');
+            $table->string('ulasan')->nullable()->default('text');
+            $table->bigInteger('userId')->nullable()->unsigned();
+            $table->bigInteger('profileRentalId')->nullable()->unsigned();
             $table->timestamps();
 
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('profileRentalId')->references('id')->on('profile_rentals')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('keuangans');
+        Schema::dropIfExists('rating_konsumens');
     }
 };

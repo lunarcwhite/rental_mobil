@@ -36,7 +36,7 @@
             <div>
                 <a>
                     <img src="{{ asset('img/profile.jpg') }}" alt="avatar" class="imaged w24 rounded mr-05">
-                    {{ $mobil->profileRental->namaRental }}
+                    {{ $mobil->profileRental->namaRental }} &nbsp; &nbsp; &nbsp; &nbsp;<span><i class="fab fa-whatsapp"></i> {{ $mobil->profileRental->noHpRental }}</span>
                 </a>
             </div>
             Bergabung sejak {{ $mobil->profileRental->created_at->format('m-Y') }}
@@ -64,17 +64,19 @@
 
 
     <div class="section mt-4">
+        @if ($mobil->statusPersetujuan == 1 && Auth::user()->accountVerified == 1)
         <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
             data-target="#durasiRental">
             Rental Sekarang
         </button>
+        @endif
     </div>
 
     <div class="divider mt-4 mb-3"></div>
 
     <div class="section">
         <div class="section-title mb-1">
-            <h3 class="mb-0">Review (3)</h3>
+            <h3 class="mb-0">Review ({{ $ratings->count() }})</h3>
         </div>
         <div class="pt-2 pb-2">
             <!-- comment block -->
