@@ -24,4 +24,11 @@
             <strong>GPS</strong>
         </div>
     </a>
+    <a href="{{ route('adminRental.pesan.index') }}" class="item">
+        <div class="col">
+            <ion-icon name="chatbubble-outline"></ion-icon>
+            {{-- <span class="badge badge-danger">{{ $transaksiBerjalan }}</span> --}}
+            <strong>Pesan</strong>
+        </div>
+    </a>
 </div>

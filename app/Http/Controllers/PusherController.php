@@ -20,26 +20,33 @@ class PusherController extends Controller
 
     public function broadcast(Request $request)
     {
-        broadcast(new PusherBroadcast($request->get('message')))->toOthers();
+        try {
+            broadcast(new PusherBroadcast($request->get('message')))->toOthers();
+            $id = $request->mobilId;
 
-        $id = $request->mobilId;
-
-        $mobil = Mobil::where('id', $id)->first();
-        $pesan = Pesan::where('userId', Auth::user()->id)->where('profileRentalId', $mobil->profileRentalId)->first();
-
-        if($pesan != null){
-            Pesan::create([
-                'userId' => Auth::user()->id,
-                'profileRentalId' => $mobil->profileRentalId,
-                'channel' => Crypt::encrypt($id),
-            ]);
+            $mobil = Mobil::where('id', $id)->first();
+            if (Auth::user()->roleId == 3) {
+                $pesan = Pesan::where('userId', Auth::user()->id)
+                    ->where('profileRentalId', $mobil->profileRentalId)
+                    ->first();
+                if ($pesan != null) {
+                    Pesan::create([
+                        'userId' => Auth::user()->id,
+                        'profileRentalId' => $mobil->profileRentalId,
+                        'channel' => Crypt::encrypt($id),
+                    ]);
+                }
+            }
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            //throw $th;
         }
 
-        return view('Pesan.broadcast', ['message' => $request->get('message')]);
+        return view('layouts.content.broadcast', ['message' => $request->get('message')]);
     }
 
     public function receive(Request $request)
     {
-        return view('Pesan.receive', ['message' => $request->get('message')]);
+        return view('layouts.content.receive', ['message' => $request->get('message')]);
     }
 }

@@ -18,6 +18,7 @@ use App\Http\Controllers\AdminRental\MonitoringKonsumenController;
 use App\Http\Controllers\AdminRental\RiwayatTransaksiController;
 use App\Http\Controllers\AdminRental\LaporanKeuanganController;
 use App\Http\Controllers\AdminRental\TrackingGpsController;
+use App\Http\Controllers\AdminRental\PesanController;
 use App\Http\Controllers\PusherController;
 
 /*
@@ -139,6 +140,10 @@ Route::middleware('auth')->group(function () {
                 Route::controller(TrackingGpsController::class)->group(function () {
                     Route::get('/trackingGps', 'index')->name('trackingGps.index');
                     Route::get('/trackingGps/{id}', 'show')->name('trackingGps.show');
+                });
+                Route::controller(PesanController::class)->group(function () {
+                    Route::get('/pesan', 'index')->name('pesan.index');
+                    Route::get('/pesan/{id}', 'show')->name('pesan.show');
                 });
             });
         });

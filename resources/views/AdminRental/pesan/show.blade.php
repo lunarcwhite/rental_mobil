@@ -30,11 +30,11 @@
     <!-- App Header -->
     <div class="appHeader bg-primary text-light">
         <div class="left">
-            <a href="{{ url()->previous() }}" class="headerButton">
+            <a href="{{ route('adminRental.pesan.index') }}" class="headerButton">
                 <ion-icon name="chevron-back-outline"></ion-icon>
             </a>
         </div>
-        <div class="pageTitle">{{ $mobil->profileRental->namaRental }}</div>
+        <div class="pageTitle">{{ $pesan->user->profile->namaLengkap }}</div>
         <div class="right">
             <a href="javascript:;" class="headerButton">
                 <ion-icon name="videocam-outline"></ion-icon>
