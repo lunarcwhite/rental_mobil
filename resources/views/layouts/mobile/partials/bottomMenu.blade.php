@@ -18,7 +18,7 @@
             <strong>Mobil</strong>
         </div>
     </a>
-    <a href="https://tracker.id/mobile/tracking.php" class="item">
+    <a href="{{ route('adminRental.trackingGps.index') }}" class="item">
         <div class="col">
             <ion-icon name="map-outline"></ion-icon>
             <strong>GPS</strong>

@@ -60,6 +60,12 @@
       <span>Persetujuan Mobil</span>
     </a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{ route('superAdmin.gps.index') }}">
+      <i class="fas fa-map-marked-alt"></i>
+      <span>GPS</span>
+    </a>
+  </li>
   <hr class="sidebar-divider">
   <div class="sidebar-heading">
     Transaksi
@@ -74,17 +80,6 @@
     <a class="nav-link" href="{{ route('superAdmin.laporanPendapatan.index') }}">
       <i class="fas fa-fw fa-money-bill-wave"></i>
       <span>Laporan Pendapatan</span>
-    </a>
-  </li>
-  @endcan
-  @can('Admin Rental')
-  <div class="sidebar-heading">
-    Mobil
-  </div>
-  <li class="nav-item">
-    <a class="nav-link" href="{{ route('adminRental.kelolaMobil.index') }}">
-      <i class="fas fa-fw fa-car"></i>
-      <span>Kelola Mobil</span>
     </a>
   </li>
   @endcan

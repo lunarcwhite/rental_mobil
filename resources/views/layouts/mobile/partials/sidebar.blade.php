@@ -47,11 +47,25 @@
                                 </div>
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ route('register') }}" class="item">
+                                <div class="icon-box">
+                                    <ion-icon name="create-outline"></ion-icon>
+                                </div>
+                                <div class="in">
+                                    Daftar
+                                </div>
+                            </a>
+                        </li>
                     @endguest
                     @auth
                     @cannot('accountVerified')
                     <li>
-                        <a href="{{ route('profile.create') }}" class="item">
+                        @if (Auth::user()->profile == null)
+                        <a href="{{ route('profile.create') }}" class="item">    
+                        @else
+                        <a href="{{ route('profile.index') }}" class="item"> 
+                        @endif
                             <div class="icon-box">
                                 <ion-icon name="person-outline"></ion-icon>
                             </div>

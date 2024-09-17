@@ -8,6 +8,7 @@ use App\Http\Controllers\SuperAdmin\PersetujuanAkunController;
 use App\Http\Controllers\SuperAdmin\PersetujuanMobilController;
 use App\Http\Controllers\SuperAdmin\HistoriTransaksiController;
 use App\Http\Controllers\SuperAdmin\LaporanPendapatanController;
+use App\Http\Controllers\SuperAdmin\GpsController;
 use App\Http\Controllers\AdminRental\KelolaMobilController;
 use App\Http\Controllers\AdminRental\TransaksiController;
 use App\Http\Controllers\LandingPageController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Konsumen\RiwayatRentalController;
 use App\Http\Controllers\AdminRental\MonitoringKonsumenController;
 use App\Http\Controllers\AdminRental\RiwayatTransaksiController;
 use App\Http\Controllers\AdminRental\LaporanKeuanganController;
+use App\Http\Controllers\AdminRental\TrackingGpsController;
 use App\Http\Controllers\PusherController;
 
 /*
@@ -93,6 +95,13 @@ Route::middleware('auth')->group(function () {
                 Route::controller(LaporanPendapatanController::class)->group(function () {
                     Route::get('/laporanPendapatan', 'index')->name('laporanPendapatan.index');
                 });
+                Route::controller(GpsController::class)->group(function () {
+                    Route::get('/gps', 'index')->name('gps.index');
+                    Route::get('/gps/create/{id}', 'create')->name('gps.create');
+                    Route::post('/gps/{id}', 'store')->name('gps.store');
+                    Route::get('/gps/{id}', 'edit')->name('gps.edit');
+                    Route::put('/gps/{id}', 'update')->name('gps.update');
+                });
             });
         });
     });
@@ -126,6 +135,10 @@ Route::middleware('auth')->group(function () {
                 });
                 Route::controller(LaporanKeuanganController::class)->group(function () {
                     Route::get('/laporanKeuangan', 'index')->name('laporanKeuangan.index');
+                });
+                Route::controller(TrackingGpsController::class)->group(function () {
+                    Route::get('/trackingGps', 'index')->name('trackingGps.index');
+                    Route::get('/trackingGps/{id}', 'show')->name('trackingGps.show');
                 });
             });
         });

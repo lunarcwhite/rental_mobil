@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Mobil extends Model
 {
@@ -26,5 +27,15 @@ class Mobil extends Model
     public function persetujuanMobil(): HasMany
     {
         return $this->hasMany(PersetujuanMobil::class, 'mobilId');
+    }
+
+    /**
+     * Get the gps associated with the Mobil
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function gps(): HasOne
+    {
+        return $this->hasOne(GPS::class, 'mobilId');
     }
 }
