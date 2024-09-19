@@ -25,7 +25,7 @@ Laporan Keuangan
                             <label for="filterBulan">Pilih Bulan dan Tahun</label>
                             <input type="month" name="filter" class="form-control">
                         </div>
-            
+
                         <!-- Tombol Filter -->
                         <div class="form-group col-md-2 align-self-end">
                             <button type="submit" class="btn btn-primary btn-block">Filter</button>
@@ -35,7 +35,7 @@ Laporan Keuangan
             </div>
         </div>
         <div class="card">
-            
+
             <!-- Card Body: Tabel Laporan Keuangan -->
             <div class="card-body">
                 <div class="table-responsive">
@@ -51,17 +51,23 @@ Laporan Keuangan
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $totalPendapatan = 0;
+                            @endphp
                             @foreach ($pendapatans as $no => $pendapatan)
                             <tr>
                                 <td>{{ $no+1 }}</td>
-                                <td>{{ $pendapatan->kodePembayaran }}</td>
+                                <td>{{ $pendapatan->pembayaran->kodePembayaran }}</td>
                                 <td>{{ $pendapatan->mobil->namaMobil }}</td>
                                 <td>{{ $pendapatan->user->profile->namaLengkap }}</td>
-                                <td>Rp. {{ $pendapatan->pendapatanRental }}</td>
+                                <td>Rp. {{ $pendapatan->pembayaran->pendapatanRental }}</td>
                                 <td>
                                     <a href="{{ route('adminRental.riwayatTransaksi.invoice', $pendapatan->id) }}" class="btn btn-sm btn-primary">Lihat</a>
                                 </td>
                             </tr>
+                            @php
+                                $totalPendapatan += $pendapatan->pembayaran->pendapatanRental;
+                            @endphp
                             @endforeach
                         </tbody>
                         <tfoot>
@@ -71,13 +77,13 @@ Laporan Keuangan
                             </tr>
                             <tr class="font-weight-bold">
                                 <td colspan="3" class="text-right">Total Pendapatan</td>
-                                <td colspan="3" class="text-right">Rp. {{ $pendapatans->sum('pendapatanRental') }}</td>
+                                <td colspan="3" class="text-right">Rp. {{ $totalPendapatan }}</td>
                             </tr>
                         </tfoot>
                     </table>
                 </div>
             </div>
         </div>
-    
+
     </div>
 @endsection

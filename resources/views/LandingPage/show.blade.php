@@ -6,11 +6,11 @@
     <a href="page-blogpost.html#" class="headerButton" data-toggle="modal" data-target="#actionSheetShare">
         <ion-icon name="share-social-outline"></ion-icon>
     </a>
-    <form action="" method="post">
+    {{-- <form action="" method="post">
         <a href="{{ route('chat', encrypt($mobil->id)) }}" class="headerButton">
             <ion-icon name="chatbubbles-outline"></ion-icon>
         </a>
-    </form>
+    </form> --}}
 @endsection
 @section('content')
     <div class="blog-post">
@@ -64,12 +64,14 @@
 
 
     <div class="section mt-4">
-        @if ($mobil->statusPersetujuan == 1 && Auth::user()->accountVerified == 1)
+        @auth
+
         <button type="button" class="btn btn-primary btn-block" data-toggle="modal"
             data-target="#durasiRental">
             Rental Sekarang
         </button>
-        @endif
+        @endauth
+
     </div>
 
     <div class="divider mt-4 mb-3"></div>
@@ -98,7 +100,7 @@
                         </div>
                         <div class="comment-footer">
                             @for ($i = 1; $i <= $rating->bintang; $i++)
-                            <ion-icon name="star"></ion-icon>    
+                            <ion-icon name="star"></ion-icon>
                             @endfor
                         </div>
                     </div>
@@ -106,7 +108,7 @@
                 <!-- * item -->
             </div>
             @empty
-                
+
             @endforelse
             <!-- * comment block -->
         </div>

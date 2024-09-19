@@ -24,7 +24,7 @@ class RiwayatTransaksiController extends Controller
         } catch (\Throwable $th) {
             return view('errors.500');
         }
-        return view('AdminRental.riwayatTransaksi.index')->with($data);        
+        return view('AdminRental.riwayatTransaksi.index')->with($data);
     }
     public function invoice($id)
     {
