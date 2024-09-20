@@ -52,13 +52,14 @@ class PersetujuanAkunController extends Controller
     {
         $request->validate([
             'alasanPenolakan' => 'required'
-        ]); 
+        ]);
         try {
             PersetujuanAkun::create([
                 'alasanPenolakan' => $request->alasanPenolakan,
                 'userId' => $id
             ]);
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return redirect()->back()->withErrors('Aksi gagal!')->withInput();
         }
 

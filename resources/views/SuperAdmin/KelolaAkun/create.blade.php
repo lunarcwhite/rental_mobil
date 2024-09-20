@@ -31,7 +31,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="exampleInputEmail1">Password</label>
-                        <input type="text" class="form-control" name="password" aria-describedby="passwordHelp">
+                        <input type="password" class="form-control" name="password" aria-describedby="passwordHelp">
                     </div>
             </div>
             <div class="modal-footer">

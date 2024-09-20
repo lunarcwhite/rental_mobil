@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('persetujuan_akuns', function (Blueprint $table) {
             $table->id();
-            $table->string('alasan_penolakan');
+            $table->string('alasanPenolakan');
             $table->bigInteger('userId')->unsigned();
             $table->timestamps();
-            
+
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }

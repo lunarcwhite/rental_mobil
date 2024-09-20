@@ -12,7 +12,7 @@
                     <label for="filterBulan">Pilih Bulan dan Tahun</label>
                     <input type="month" name="filter" class="form-control">
                 </div>
-    
+
                 <!-- Tombol Filter -->
                 <div class="form-group col-md-2 align-self-end">
                     <button type="submit" class="btn btn-primary btn-block">Filter</button>
@@ -22,7 +22,7 @@
     </div>
 </div>
 <div class="card">
-    
+
     <!-- Card Body: Tabel Laporan Keuangan -->
     <div class="card-body">
         <div class="table-responsive">
@@ -33,7 +33,7 @@
                         <th>No Order</th>
                         <th>Rental</th>
                         <th>Mobil</th>
-                        <th>Perental</th>
+                        <th>Konsumen</th>
                         <th>Pendapatan</th>
                         <th>Invoice</th>
                     </tr>
@@ -60,7 +60,7 @@
                     </tr>
                     <tr class="font-weight-bold">
                         <td colspan="3" class="text-right">Total Pendapatan</td>
-                        <td colspan="4" class="text-right">Rp. {{ $pendapatans->sum('pendapatanRental') }}</td>
+                        <td colspan="4" class="text-right">Rp. {{ $pendapatans->sum('pendapatanAplikasi') }}</td>
                     </tr>
                 </tfoot>
             </table>

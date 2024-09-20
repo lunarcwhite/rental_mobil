@@ -12,15 +12,15 @@ class LaporanKeuanganController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Pembayaran::where('profileRentalId', Auth::user()->profileRental->id)
-            ->where('statusPembayaran', 1)
+        $query = Rental::where('profileRentalId', Auth::user()->profileRental->id)
+            ->where('statusSelesai', 1)
             ->get();
         if ($request->filled('filter')) {
             $date = $request->filter;
             // Memecah string berdasarkan tanda '-'
             [$year, $month] = explode('-', $date);
-            $query = Pembayaran::where('profileRentalId', Auth::user()->profileRental->id)
-            ->where('statusPembayaran', 1)->whereMonth('created_at', $month)->whereYear('created_at', $year)->get();
+            $query = Rental::where('profileRentalId', Auth::user()->profileRental->id)
+            ->where('statusSelesai', 1)->whereMonth('created_at', $month)->whereYear('created_at', $year)->get();
         }
         try {
             $rental = Rental::where('statusSelesai', 1)->whereColumn('rentals.pembayaranId', 'pembayarans.id');

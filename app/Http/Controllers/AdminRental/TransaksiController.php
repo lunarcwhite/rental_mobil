@@ -53,7 +53,8 @@ class TransaksiController extends Controller
     {
         try {
             $pembayaran = Pembayaran::where('id', $id)->first();
-            $keuangan = Keuangan::where('userId', $pembayaran->profileRental->userId)->first(); 
+           // $keuangan = Keuangan::where('userId', $pembayaran->profileRental->userId)->first();
+            $keuangan = Keuangan::where('userId',Auth::user()->id)->first();
             Rental::where('pembayaranId', $id)->update([
                 'statusSelesai' => 1,
                 'statusBerjalan' => 0,
@@ -88,7 +89,7 @@ class TransaksiController extends Controller
                 'statusPembayaran' => 2
             ]);
             $pembayaran = Pembayaran::where('id', $id)->first();
-            $keuangan = Keuangan::where('userId', $pembayaran->userId)->first(); 
+            $keuangan = Keuangan::where('userId', $pembayaran->userId)->first();
 
             if ($keuangan == null) {
                 Keuangan::create([

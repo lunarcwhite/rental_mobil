@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
 
         $this->call([
-            TruncateData::class,
+            // TruncateData::class,
             SuperAdminSeeder::class,
             RoleSeeder::class,
             AdminRentalSeeder::class,

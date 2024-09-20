@@ -50,13 +50,14 @@ class PersetujuanMobilController extends Controller
     {
         $request->validate([
             'alasanPenolakan' => 'required'
-        ]); 
+        ]);
         try {
             PersetujuanMobil::create([
                 'alasanPenolakan' => $request->alasanPenolakan,
                 'mobilId' => $id
             ]);
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return redirect()->back()->withErrors('Aksi gagal!')->withInput();
         }
 

@@ -109,7 +109,7 @@ class PembayaranController extends Controller
 
             $snapToken = \Midtrans\Snap::getSnapToken($params);
         } catch (\Throwable $th) {
-            // dd($th->getMessage());
+            dd($th->getMessage());
             return view('errors.500');
         }
 
